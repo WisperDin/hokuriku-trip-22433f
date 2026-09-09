@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>剧本推演 · 十一日本红叶行</title>
+<style>
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f5f7;
+  --bg-tertiary:   #fbfbfd;
+  --bg-grouped:    #f2f2f7;
+  --bg-elevated:   #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary:  #aeaeb2;
+  --accent:        #0071e3;
+  --accent-hover:  #0077ed;
+  --tint-red:    #ff3b30;
+  --tint-orange: #ff9500;
+  --tint-green:  #34c759;
+  --separator:  rgba(60, 60, 67, .12);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 14px rgba(0,0,0,.08);
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg-secondary); }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "PingFang SC", "Helvetica Neue", "Arial", sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  padding-bottom: calc(48px + var(--safe-bottom));
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.85); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: .5px solid var(--separator);
+  padding: calc(12px + var(--safe-top)) 20px 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.topbar .back {
+  font-size: 15px; font-weight: 500; color: var(--accent);
+  display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+}
+.topbar nav { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.topbar nav::-webkit-scrollbar { display: none; }
+.topbar nav a {
+  flex-shrink: 0; padding: 6px 13px; border-radius: 980px;
+  background: var(--bg-grouped); color: var(--text-secondary);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.topbar nav a.active { background: var(--accent); color: #fff; }
+
+.doc {
+  max-width: 760px; margin: 0 auto; padding: 28px 20px 20px;
+}
+.doc h1 {
+  font-size: 30px; font-weight: 700; letter-spacing: -0.02em;
+  margin: 0 0 6px; color: var(--text-primary);
+}
+.doc h2 {
+  font-size: 21px; font-weight: 700; margin: 36px 0 14px;
+  padding-top: 8px; border-top: .5px solid var(--separator);
+  letter-spacing: -0.01em;
+}
+.doc h1 + h2 { border-top: none; margin-top: 20px; }
+.doc h3 {
+  font-size: 17px; font-weight: 650; margin: 24px 0 10px;
+  color: var(--text-primary);
+}
+.doc h4 { font-size: 15px; font-weight: 650; margin: 18px 0 8px; color: var(--text-secondary); }
+.doc p { margin: 0 0 14px; font-size: 15px; color: var(--text-primary); }
+.doc ul, .doc ol { margin: 0 0 14px; padding-left: 22px; font-size: 15px; }
+.doc li { margin-bottom: 6px; }
+.doc li > ul, .doc li > ol { margin-top: 6px; margin-bottom: 0; }
+.doc strong { font-weight: 650; }
+.doc blockquote {
+  margin: 0 0 14px; padding: 10px 16px; background: var(--bg-grouped);
+  border-radius: var(--radius-md); border-left: 3px solid var(--accent);
+  color: var(--text-secondary); font-size: 14px;
+}
+.doc blockquote p:last-child { margin-bottom: 0; }
+.doc code {
+  background: var(--bg-grouped); padding: 2px 6px; border-radius: 5px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+}
+.doc pre {
+  background: #1d1d1f; color: #f5f5f7; padding: 16px; border-radius: var(--radius-md);
+  overflow-x: auto; margin: 0 0 14px; font-size: 13px; line-height: 1.55;
+  -webkit-overflow-scrolling: touch;
+}
+.doc pre code { background: none; padding: 0; color: inherit; }
+.doc hr { border: none; border-top: .5px solid var(--separator); margin: 28px 0; }
+.doc .table-wrap { overflow-x: auto; margin: 0 0 16px; -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--bg-elevated); }
+.doc th, .doc td { padding: 10px 14px; text-align: left; border-bottom: .5px solid var(--separator); }
+.doc th { background: var(--bg-grouped); font-weight: 650; color: var(--text-secondary);
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+.doc tr:last-child td { border-bottom: none; }
+.doc td del, .doc th del { color: var(--text-tertiary); }
+.doc img { max-width: 100%; border-radius: var(--radius-md); margin: 8px 0; }
+.meta-bar {
+  font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: #000; --bg-secondary: #000; --bg-tertiary: #1c1c1e;
+    --bg-grouped: #1c1c1e; --bg-elevated: #1c1c1e;
+    --text-primary: #f5f5f7; --text-secondary: #98989d; --text-tertiary: #6e6e73;
+    --separator: rgba(84,84,88,.6);
+  }
+  :root:not([data-theme="light"]) .topbar { background: rgba(0,0,0,.85); }
+  :root:not([data-theme="light"]) .doc pre { background: #1c1c1e; }
+}
+:root[data-theme="dark"] {
+  --bg-primary: #000; --bg-secondary: #000; --bg-tertiary: #1c1c1e;
+  --bg-grouped: #1c1c1e; --bg-elevated: #1c1c1e;
+  --text-primary: #f5f5f7; --text-secondary: #98989d; --text-tertiary: #6e6e73;
+  --separator: rgba(84,84,88,.6);
+}
+:root[data-theme="dark"] .topbar { background: rgba(0,0,0,.85); }
+:root[data-theme="dark"] .doc pre { background: #1c1c1e; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">← 主页</a>
+  <nav>
+    <a href="plan.html" class="">计划</a>
+    <a href="lodging.html" class="">住宿</a>
+    <a href="script.html" class="active">推演</a>
+    <a href="map.html" class="">地图</a>
+  </nav>
+</div>
+<div class="doc">
+<h1>剧本流水账 · 逐天推演找问题</h1>
+<p>不是复述行程表，是把每段衔接算一遍：几点起床、路上花多少、饭在哪、人还撑不撑得住。
+标 ⚠️ 的是推演出来、目前行程表没写清楚或算不过来的地方。</p>
+<hr />
+<h2>D1 · 10/1 周四 · 香港 → 小松 → 金泽</h2>
+<p>14:35 是<strong>落地时间</strong>，不是"到站时间"。国际航班下来过海关、取行李，4 个人 4 个大箱，实际到巴士站大概是 <strong>15:10-15:20</strong>，比行程表默认的晚半小时以上。</p>
+<p>⚠️ <strong>这半小时没算进去</strong>。45 分钟巴士，到金泽站大概 16:00-16:10，勉强还能接上后面。</p>
+<p>✅ <strong>D1 住宿已订</strong>（Airbnb 整租，站步行 5 分钟），自助入住窗口 <strong>16:00-21:00</strong>——按上面推算的到站时间，卡在窗口开头，正常情况没问题。⚠️ 但这也说明这天<strong>完全没有延误容错</strong>：航班晚点、行李转盘慢、巴士堵车，任何一环拖 15-20 分钟都不影响入住（窗口到 21:00），真正的风险只在<strong>极端延误</strong>（比如航班大幅延误到 21:00 后）——这种情况要提前问好房东能不能灵活处理，而不是假设自助入住等于"随时能进"。</p>
+<p>到站后办入住、放行李、喘口气——⚠️ 这家是老宅，<strong>楼梯狭窄陡峭</strong>，4 个 28 寸大箱子搬上楼（5/7 床位在二楼）比商务酒店电梯多花不少时间和体力，第一天落地已经很累，这段扛箱子的体力消耗要算进疲劳曲线里。最早 16:45 出门。东茶屋街巴士 15 分钟，到达 <strong>17:15-17:30</strong>——正好撞上「店铺 17:00-18:00 陆续关」这条你们自己写的提醒。</p>
+<p>⚠️ <strong>等于第一天到东茶屋街基本只能拍灯笼照，逛不了店</strong>。这不是不合理，只是要提前说清楚，别指望买手信。</p>
+<p>19:30 晚餐，从茶屋街回站要坐 15 分钟巴士，19:00 前得从茶屋街往回走——留给拍照的时间其实只有 1 个多小时。</p>
+<p>第一天：<strong>长途飞行 + 拖着大箱走完全程，没有真正休息的空档</strong>，晚饭后基本就是倒头睡。</p>
+<hr />
+<h2>D2 · 10/2 周五 · 雨晴海岸 → 富山</h2>
+<p>这天问题最集中。</p>
+<p><strong>行李没地方放。</strong> 今晚要换到富山住，等于今天全程拖着 4 个大箱：金泽站→JR→高冈换车→雨晴海岸→原路返回→再转富山。乡下铁路班次稀疏，拖箱换乘不是小事。
+⚠️ <strong>这条路线目前没交代行李怎么办</strong>——要么全程扛着，要么在高冈站用投币柜寄存一下（去程存、回程取），后者更现实但没人确认过高冈站有没有足够的大柜子。</p>
+<p>要 09:30 到雨晴海岸，倒推：JR 1 小时 20 分（含高冈换车）+ 走到金泽站 + 买票，等于<strong>早上 7:30-8:00 就要出发</strong>——昨晚刚落地的第二天早上，还没缓过来。</p>
+<p>在雨晴待到大概 11:00-11:30（看海+拍照），原路经高冈返回，到富山站大概 <strong>13:00 左右</strong>。</p>
+<p>⚠️ <strong>这天没有午饭时间</strong>。从雨晴回来直接到富山，行程表下一项是 14:30 环水公园，中间没排饭——四个人到点了会饿，得自己找空档插一顿，行程表上是空的。</p>
+<p>⚠️ <strong>发现一处内部矛盾</strong>：环水公园的备注写着「16:00-16:30 落日会把立山连峰染成粉色」，但玻璃美术馆排在 16:00。<strong>人不能同时在两个地方</strong>。要看落日就得把顺序倒过来——先去美术馆（14:30-15:45），再回环水公园看 16:00 的日落，现在的顺序（先公园后美术馆）会直接错过这个日落窗口。</p>
+<p>18:30 黑拉面晚饭，从美术馆走过去很近，这段没问题。20:00 入住——吃完饭正好，前提是晚饭别拖太久。</p>
+<p>这天要么砍掉一个点腾出午饭，要么接受"边走边啃点东西"，但顺序问题（日落 vs 美术馆）建议直接调整。</p>
+<hr />
+<h2>D3 · 10/3 周六 · 立山黑部穿越 → 松本</h2>
+<p><strong>全程最硬的一天，而且是在没休息够的情况下硬扛。</strong></p>
+<p>07:30 要到立山站，从富山电铁倒推大概 1 小时车程，加上走路买票，<strong>5:30-6:00 就要起床</strong>——这是行程里第二个连续的极早起床（第一天飞机落地，第二天 7 点多出发，第三天 5 点多起床）。</p>
+<p>8.5 小时穿越（07:30-16:00），换 6 种交通工具，中间没有一段是能坐着放松的——都是排队、赶车、拍照。</p>
+<p>⚠️ <strong>室堂那段（10:00-12:30，2.5 小时）可能不够</strong>。你们自己的调研写了「别只在站附近晃，要往里走到雷鸟沢」，这条纵深路线要走楼梯下去再上来，如果真按这个走，2.5 小时含拍照会很紧，可能要压缩到大观峰/黑部平的时间。</p>
+<p>16:00 到扇泽，2 小时巴士到松本，到站 18:00-18:30，接下来是"松本城（如有余力）"——</p>
+<p>⚠️ <strong>这天没有晚饭安排</strong>。爬了一整天山、坐了 2 小时巴士，到松本已经 18:30，行程表直接跳到"晚上有精力就去看松本城"。现实是：大概率没人有精力，会直接找地方吃饭然后回酒店躺平。这不是坏事，但行程表应该明确写"这天没有安排晚饭和夜游，是留白"，而不是暗示"如有余力"——四个人爬了一天山，"余力"基本不存在。</p>
+<p>⚠️ <strong>这天完全押注天气</strong>。如果室堂那天下雨，整条穿越路线的体验直接腰斩，而这是唯一一天不能改期（订好了扇泽的巴士票）。这也是为什么之前建议富山/松本订可免费取消房——但即便天气不好，行程本身还是得走完，退无可退。</p>
+<hr />
+<h2>D4 · 10/4 周日 · 松本 → 新穗高缆车 → 平汤温泉</h2>
+<p>⚠️ <strong>早上有个悬而未决的风险</strong>：如果松本住的是"翔峰"那类靠接驳车代收行李的酒店，行李是前一天从富山寄过来的——<strong>寄送到达时间和你们要坐的早班车时间谁先谁后，现在没人确认过</strong>。万一行李没到，人已经要走了，会很麻烦。这条在 LODGING.md 里提过但没解决，这里是它第一次真正卡在时间线上。</p>
+<p>11:00 高山换乘，从松本坐特急约 1.5-2 小时，倒推大概 09:00-09:30 从松本出发——比前一天稍微好一点，但也不算晚。</p>
+<p>11:00 高山 → 1.5 小时巴士到平汤 → 25 分钟巴士到新穗高，理论到达 12:30-13:00，行程表写 14:00，中间有 1 小时缓冲，正好用来吃午饭（山上有小吃店，这个安排是对的）。</p>
+<p>⚠️ <strong>缆车票现场买、不能提前订</strong>，十一旺季这一条排队可能很长。行程表没给排队留时间，14:00-17:30 这 3.5 小时里，如果排队占掉 1 小时，缆车+观景的时间就被大幅压缩。</p>
+<p>17:30 到平汤入住，一泊二食晚餐通常 18:00-19:00，这个衔接没问题。<strong>关键是今晚必须早睡</strong>——因为明天是全程最早的一个起床。</p>
+<hr />
+<h2>D5 · 10/5 周一 · 上高地徒步 → 高山</h2>
+<p><strong>这是三天连续高强度里的第三天，也是起床最早的一天。</strong></p>
+<p>06:30 要到上高地总站，平汤首班车通常 5-6 点，倒推<strong>起床时间大概 4:30-5:00</strong>。这是全程最早的一次，而且前面已经连续两天高强度（立山黑部 + 缆车排队）。</p>
+<p>⚠️ <strong>早饭没法吃</strong>。这个点走，旅馆的早餐服务（通常 7-8 点开始）根本赶不上——LODGING.md 里提到这个问题是针对高山那家温泉酒店说的，但同样的问题今天早上在平汤更严重。<strong>得提前跟旅馆说好要早餐便当，或者自己准备干粮</strong>，不然四个人饿着肚子走 5.6 公里。</p>
+<p>06:30 河童桥 → 08:30 明神桥 → 09:00 明神池 → 10:30 岳泽湿原，这段走位是对的（不走回头路）。</p>
+<p>⚠️ <strong>10:30 走完岳泽湿原之后，到 16:30 高山三町古街之间，中间 6 个小时行程表上完全是空的</strong>。推演一下大概是这样填满的：
+- 走回上高地总站（约 1-1.5 小时）→ 12:00 左右
+- 坐车回平汤（25 分钟）→ 12:30，取回寄存的大箱
+- 平汤没什么开门的餐馆——<strong>这里又是一顿没着落的午饭</strong>，和昨天新穗高那顿不一样，昨天有山上小吃店垫底，今天中午在平汤能吃到什么完全没查过
+- 坐车去高山（约 1.5 小时）→ 14:00-14:30 到</p>
+<p>这条推演能接上，但<strong>中间那顿午饭是第三次出现"没查过在哪吃"的情况</strong>（D2、D5 都是），说明行程整体在"吃饭"这件事上排得比"看景点"松，值得单独补一版三餐候选。</p>
+<p>16:30-19:00 三町古街 + 飞驒牛晚饭，19:00 入住高山，这段没问题。</p>
+<p><strong>这天结束时的真实状态</strong>：连续第三天高强度、连续第二天极早起床、两顿饭没着落、走了 5.6 公里山路。四个人到晚上大概率都很累，这是全程体力消耗的顶点。</p>
+<hr />
+<h2>D6 · 10/6 周二 · 白川乡 → 金泽</h2>
+<p><strong>这是第一个能喘口气的早晨</strong>——不用赶首班车，正常时间起床（大概 7:30-8:00），是前五天里第一次。</p>
+<p>09:30 到白川乡，逛到中午（含午饭，行程表提醒了"景区人多要早点吃"，这条是排对了的），坐直达巴士到金泽约 1 小时 15 分，到站大概 13:15-13:30。</p>
+<p>⚠️ <strong>13:30 到 15:30 入住之间空了将近 2 小时</strong>。日本酒店标准入住时间通常是 15:00，所以这个空档大概率是"到了但进不去房间"——不是行程排得有问题，是<strong>这天本来就该松一口气</strong>，可以当成缓冲，找家咖啡店坐坐，正好用来消化前面三天的疲劳。建议明确写出来这是"故意留白"，别让人觉得"这两小时不知道干嘛"。</p>
+<p>17:00 香林坊购物，晚饭自由活动，这天整体是全程最松的一天。</p>
+<hr />
+<h2>D7 · 10/7 周三 · 金泽深度游</h2>
+<p>09:30 到 16:00 排得比较满但都在市区，彼此步行或短程可达，问题不大。</p>
+<p>⚠️ <strong>真正的冲突在"汤涌温泉"这个可选项上</strong>。长町逛完大概 16:30，如果这时候决定去汤涌温泉——来回巴士 50 分钟×2 + 泡汤至少 1-1.5 小时，最少要 3.5 小时，也就是要到 20:00 以后才能回市区。<strong>而这是全程最后一晚，四个人的箱子里还要塞下一周的购物战利品</strong>，晚上回来还要收拾行李准备明天一早的飞机。</p>
+<p>这不是说汤涌温泉不能去，是这个选择需要提前拍板，不能到了长町再临时决定——去了汤涌温泉，今晚基本没有收行李的整块时间，只能压缩到很晚或者留到明天早上手忙脚乱。</p>
+<hr />
+<h2>D8 · 10/8 周四 · 金泽 → 小松 → 香港</h2>
+<p>12:00 上机场巴士，13:20 到机场，15:20 起飞——<strong>中间只有 2 小时</strong>，这是行程表自己写的"建议至少提前 2 小时"的下限，不是宽松值。</p>
+<p>⚠️ <strong>这 2 小时对 4 个人的国际航班有点紧</strong>：值机、托运（尤其是一周购物后箱子可能超重需要现场处理）、边检、安检，四个人排队比一个人慢得多。任何一环排队超预期，都会挤压到登机前的缓冲。建议要么坐前一班机场巴士，要么至少把托运行李在酒店退房前先称重理一遍，别指望到机场再处理超重问题。</p>
+<p>早上退房前还要把一周买的东西塞进箱子——这件事本身也需要留出时间，尤其如果 D7 晚上没收完的话（见上一条）。</p>
+<hr />
+<h2>汇总：8 天里真正值得拍板的几件事</h2>
+<ol>
+<li><strong>D2 行李怎么办</strong>——雨晴海岸这天全程拖箱子还是想办法寄存，现在没人确定</li>
+<li><strong>D2 顺序要调</strong>——先玻璃美术馆再回环水公园看日落，不然现在的顺序会错过日落</li>
+<li><strong>D2、D5 两顿午饭没着落</strong>——目前只有 D4 新穗高山上小吃店是确定的，其余两顿是空的</li>
+<li><strong>D3 晚饭不用抱幻想</strong>——爬完一天山不会有人还想逛松本城，行程表可以直接把这条改成"自由觅食+休息"</li>
+<li><strong>D4 早上的行李衔接</strong>——如果松本选了靠接驳车代收行李的酒店，寄送到达时间必须早于你们出发时间，这条要在订房时问清楚</li>
+<li><strong>D5 早饭要提前跟旅馆申请便当</strong>——首班车走不赶趟旅馆早餐</li>
+<li><strong>D7 晚上去不去汤涌温泉，要提前定，别现场纠结</strong>——它直接决定今晚有没有时间收行李</li>
+<li><strong>D8 的 2 小时是下限不是余量</strong>——四人+行李+旺季，建议提前一班车</li>
+</ol>
+<p>体力曲线上，<strong>D3→D4→D5 是连续三天高强度 + 两天极早起床</strong>，这是全程唯一需要担心"人垮了"的一段，其余几天节奏都还算合理。</p>
+</div>
+</body>
+</html>

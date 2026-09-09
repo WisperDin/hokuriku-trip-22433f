@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>旅行计划 · 十一日本红叶行</title>
+<style>
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f5f7;
+  --bg-tertiary:   #fbfbfd;
+  --bg-grouped:    #f2f2f7;
+  --bg-elevated:   #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary:  #aeaeb2;
+  --accent:        #0071e3;
+  --accent-hover:  #0077ed;
+  --tint-red:    #ff3b30;
+  --tint-orange: #ff9500;
+  --tint-green:  #34c759;
+  --separator:  rgba(60, 60, 67, .12);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 14px rgba(0,0,0,.08);
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg-secondary); }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "PingFang SC", "Helvetica Neue", "Arial", sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  padding-bottom: calc(48px + var(--safe-bottom));
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.85); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: .5px solid var(--separator);
+  padding: calc(12px + var(--safe-top)) 20px 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.topbar .back {
+  font-size: 15px; font-weight: 500; color: var(--accent);
+  display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+}
+.topbar nav { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.topbar nav::-webkit-scrollbar { display: none; }
+.topbar nav a {
+  flex-shrink: 0; padding: 6px 13px; border-radius: 980px;
+  background: var(--bg-grouped); color: var(--text-secondary);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.topbar nav a.active { background: var(--accent); color: #fff; }
+
+.doc {
+  max-width: 760px; margin: 0 auto; padding: 28px 20px 20px;
+}
+.doc h1 {
+  font-size: 30px; font-weight: 700; letter-spacing: -0.02em;
+  margin: 0 0 6px; color: var(--text-primary);
+}
+.doc h2 {
+  font-size: 21px; font-weight: 700; margin: 36px 0 14px;
+  padding-top: 8px; border-top: .5px solid var(--separator);
+  letter-spacing: -0.01em;
+}
+.doc h1 + h2 { border-top: none; margin-top: 20px; }
+.doc h3 {
+  font-size: 17px; font-weight: 650; margin: 24px 0 10px;
+  color: var(--text-primary);
+}
+.doc h4 { font-size: 15px; font-weight: 650; margin: 18px 0 8px; color: var(--text-secondary); }
+.doc p { margin: 0 0 14px; font-size: 15px; color: var(--text-primary); }
+.doc ul, .doc ol { margin: 0 0 14px; padding-left: 22px; font-size: 15px; }
+.doc li { margin-bottom: 6px; }
+.doc li > ul, .doc li > ol { margin-top: 6px; margin-bottom: 0; }
+.doc strong { font-weight: 650; }
+.doc blockquote {
+  margin: 0 0 14px; padding: 10px 16px; background: var(--bg-grouped);
+  border-radius: var(--radius-md); border-left: 3px solid var(--accent);
+  color: var(--text-secondary); font-size: 14px;
+}
+.doc blockquote p:last-child { margin-bottom: 0; }
+.doc code {
+  background: var(--bg-grouped); padding: 2px 6px; border-radius: 5px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+}
+.doc pre {
+  background: #1d1d1f; color: #f5f5f7; padding: 16px; border-radius: var(--radius-md);
+  overflow-x: auto; margin: 0 0 14px; font-size: 13px; line-height: 1.55;
+  -webkit-overflow-scrolling: touch;
+}
+.doc pre code { background: none; padding: 0; color: inherit; }
+.doc hr { border: none; border-top: .5px solid var(--separator); margin: 28px 0; }
+.doc .table-wrap { overflow-x: auto; margin: 0 0 16px; -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--bg-elevated); }
+.doc th, .doc td { padding: 10px 14px; text-align: left; border-bottom: .5px solid var(--separator); }
+.doc th { background: var(--bg-grouped); font-weight: 650; color: var(--text-secondary);
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+.doc tr:last-child td { border-bottom: none; }
+.doc td del, .doc th del { color: var(--text-tertiary); }
+.doc img { max-width: 100%; border-radius: var(--radius-md); margin: 8px 0; }
+.meta-bar {
+  font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: #000; --bg-secondary: #000; --bg-tertiary: #1c1c1e;
+    --bg-grouped: #1c1c1e; --bg-elevated: #1c1c1e;
+    --text-primary: #f5f5f7; --text-secondary: #98989d; --text-tertiary: #6e6e73;
+    --separator: rgba(84,84,88,.6);
+  }
+  :root:not([data-theme="light"]) .topbar { background: rgba(0,0,0,.85); }
+  :root:not([data-theme="light"]) .doc pre { background: #1c1c1e; }
+}
+:root[data-theme="dark"] {
+  --bg-primary: #000; --bg-secondary: #000; --bg-tertiary: #1c1c1e;
+  --bg-grouped: #1c1c1e; --bg-elevated: #1c1c1e;
+  --text-primary: #f5f5f7; --text-secondary: #98989d; --text-tertiary: #6e6e73;
+  --separator: rgba(84,84,88,.6);
+}
+:root[data-theme="dark"] .topbar { background: rgba(0,0,0,.85); }
+:root[data-theme="dark"] .doc pre { background: #1c1c1e; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">← 主页</a>
+  <nav>
+    <a href="plan.html" class="active">计划</a>
+    <a href="lodging.html" class="">住宿</a>
+    <a href="script.html" class="">推演</a>
+    <a href="map.html" class="">地图</a>
+  </nav>
+</div>
+<div class="doc">
+<h1>十一日本红叶行 · 旅行计划</h1>
+<p><strong>2026/10/1（四）– 10/8（四）｜8 天 7 晚｜4 人｜香港往返小松机场</strong>
+路线制定：Flow ｜地图页：https://wisperdin.github.io/hokuriku-trip-22433f/</p>
+<blockquote>
+<p>状态：路线已定，<strong>住宿 1/7 已订（D1）</strong>，其余 6 晚待订。文中标 ⚠️ 的是待决或待确认项。
+调研依据见同目录 <a href="RESEARCH.md">RESEARCH.md</a>，住宿调研见 <a href="LODGING.md">LODGING.md</a>，逐天推演见 <a href="SCRIPT.md">SCRIPT.md</a>。</p>
+</blockquote>
+<hr />
+<h2>一、行程安排</h2>
+<h3>骨架</h3>
+<p>金泽 → 富山 → 立山黑部 → 松本 → 奥飞驒(平汤) → 上高地 → 高山 → 白川乡 → 金泽</p>
+<h3>逐日</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>日期</th>
+<th>路线</th>
+<th>重点</th>
+<th>住</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1 10/1 四</td>
+<td>香港 → 小松 → 金泽</td>
+<td>东茶屋街</td>
+<td>金泽</td>
+</tr>
+<tr>
+<td>D2 10/2 五</td>
+<td>金泽 → 雨晴海岸 → 富山</td>
+<td>看海</td>
+<td>富山</td>
+</tr>
+<tr>
+<td>D3 10/3 六</td>
+<td>立山黑部穿越 → 松本</td>
+<td><strong>赏红叶（全程核心）</strong></td>
+<td>松本</td>
+</tr>
+<tr>
+<td>D4 10/4 日</td>
+<td>松本 → 高山 → 平汤温泉</td>
+<td>新穗高缆车、泡温泉</td>
+<td>平汤</td>
+</tr>
+<tr>
+<td>D5 10/5 一</td>
+<td>上高地徒步 → 高山</td>
+<td><strong>完整徒步</strong></td>
+<td>高山</td>
+</tr>
+<tr>
+<td>D6 10/6 二</td>
+<td>高山 → 白川乡 → 金泽</td>
+<td>⚠️ 白川乡存疑</td>
+<td>金泽</td>
+</tr>
+<tr>
+<td>D7 10/7 三</td>
+<td>金泽深度游</td>
+<td>兼六园、近江町、购物</td>
+<td>金泽</td>
+</tr>
+<tr>
+<td>D8 10/8 四</td>
+<td>金泽 → 小松 → 香港</td>
+<td>12:00 前出发</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3>关键时刻</h3>
+<ul>
+<li><strong>10/1</strong> 14:35 落地 KMQ → 机场巴士 45 分钟 → 金泽站约 16:30</li>
+<li><strong>10/3</strong> 立山站早班车进山（越早越好，旺季限流排队）</li>
+<li><strong>10/5</strong> 平汤 5–6 点首班车进上高地</li>
+<li><strong>10/8</strong> 12:00 前从金泽站西口发车，13:20 到机场，15:20 起飞</li>
+</ul>
+<h3>各段执行要点（来自调研）</h3>
+<p><strong>D2 雨晴海岸</strong>
+- 需在高冈换冰见线，班次稀疏，先查时刻表
+- 强天气依赖：看不到立山连峰就没意义，阴雨可直接砍
+- 备选：<strong>岩濑浜</strong>——「海岸线相比雨晴海岸人更少也更漂亮」
+- 富山市区 <strong>16:00–16:30</strong> 落日会把立山连峰染成粉色</p>
+<p><strong>D3 立山黑部（全程最重要的一天）</strong>
+- ⚠️ <strong>不要只在室堂站附近晃</strong>：「游客在室堂附近只会看到普通景色，前面的美图都要往里走走」
+- 推荐纵深：雷鸟荘 → 雷鸟沢，一段曲折楼梯往下，长焦出片
+- 10/5 实况：温度 9–13℃，<strong>全身防水比保暖更关键</strong>
+- 山上有日归温泉可洗
+- 大件行李当天必须寄走（见「行李动线」）
+- ⚠️ 天气晴雨体验差 10 倍，提前 3 天看预报（搜「立山町室堂」实时摄像头）</p>
+<p><strong>D4 新穗高缆车</strong>
+- ⚠️ <strong>车票 + 缆车套票不能提前买</strong>，当天在高山巴士站买
+- 山上有小吃店可解决午餐
+- 风大雪大时第二段缆车可能停运，留意窗口通知</p>
+<p><strong>D5 上高地徒步（5.6km / 2–2.5h）</strong>
+- 路线：巴士总站 → 河童桥 → 明神桥 → 明神池/穗高神社奥宫 → 岳泽湿原 → 巴士总站
+- ✅ 我们已经是「右岸去、左岸回」的不走回头路走法，符合最优解
+- ⚠️ <strong>别挨个打卡</strong>：河童桥、明神池这类小景点「跟国内大景比非常一般」，<strong>重头戏在后半段</strong>，留体力
+- 全程基本平路，<strong>普通运动鞋足够</strong>，不必徒步鞋
+- ⚠️ 真的会遇到熊和猴子。猴子不主动攻击但别投喂
+- 穿浅色或蓝绿色好拍（配冷调河水松林）</p>
+<p><strong>D6 白川乡</strong> ⚠️ 见「待决事项 D-A」</p>
+<p><strong>D7 金泽</strong>
+- 近江町市场上午最新鲜，多数摊位只收现金，周三部分店休
+- 21 世纪美术馆泳池作品要单独购票且常需预约；馆内商店文创质量高
+- 购物核心在香林坊/片町（大和百货、东急 Square）</p>
+<hr />
+<h2>二、住宿</h2>
+<h3>现状</h3>
+<p><strong>D1 金泽已订</strong>（Airbnb 整租民宿，详见下方）。其余 6 晚未订。今天距出发约三周，<strong>平汤和松本会最先卖光</strong>（十一 + 日本红叶旺季双撞），建议优先于其他晚下手。</p>
+<h3>✅ D1 · 10/1 金泽（已订）</h3>
+<p><a href="https://www.airbnb.cn/rooms/1679514104122539568">距离金泽站步行 5 分钟｜金泽观光的基地，全面翻新的传统古民宅｜3 间卧室</a>（Airbnb 整租）</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>位置</td>
+<td>金泽站步行 5 分钟，公交站步行 1 分钟（Sai River 一带）</td>
+</tr>
+<tr>
+<td>房型</td>
+<td>3 卧 7 床（最多住 7 人），<strong>只有 1 个卫生间</strong></td>
+</tr>
+<tr>
+<td>价格</td>
+<td>¥991 CNY / 晚（4 人）</td>
+</tr>
+<tr>
+<td>评分</td>
+<td>4.95★（19 条评价），Superhost，11 年房东经验</td>
+</tr>
+<tr>
+<td>取消政策</td>
+<td>9 月 26 日前免费取消，之后不可退</td>
+</tr>
+<tr>
+<td>入住/退房</td>
+<td>自助入住 <strong>16:00–21:00</strong>（有时间窗口）／11:00 前退房</td>
+</tr>
+</tbody>
+</table></div>
+<p>⚠️ <strong>三点入住前要注意</strong>：
+1. <strong>只有 1 个卫生间供 4 人用</strong>，早上排队要预留时间
+2. <strong>楼梯狭窄陡峭</strong>，卧室 1、2 在二楼（5/7 床位），4 个 28 寸大箱扛上楼是体力活
+3. <strong>16:00-21:00 的入住窗口</strong>——按 D1 落地时间推算（14:35 落地+过关取行李+45 分钟巴士，实际到站约 16:00-16:10），窗口内没问题，<strong>但若航班/巴士延误到 21:00 后，需提前问房东能否灵活处理</strong></p>
+<p>✅ 已有评价证实房东「允许提早存放行李」，但<strong>这只是入住前的临时寄存，不等于能承接 D6-7 的中途 4 晚寄存</strong>（见下方 D-C，已拍板不锁同一家，此项不再适用）。</p>
+<h3>4 人的房型现实</h3>
+<p>日本商务酒店标准房是 2 人房，<strong>4 人基本等于订 2 间</strong>。两个例外：
+- <strong>温泉旅馆和室</strong>：4 人 1 室常见，一泊二食按人头算 → 平汤那晚性价比反而最高
+- <strong>整租民宿</strong>：4 人住 3 卧够用</p>
+<h3>逐晚条件</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>晚</th>
+<th>城市</th>
+<th>硬条件</th>
+<th>加分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>金泽</td>
+<td>✅ 已订（见上）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>D2</td>
+<td>富山</td>
+<td>JR/电铁富山站步行圈；<strong>前台能代寄宅急便</strong>；<strong>可免费取消</strong></td>
+<td>能当晚收件次日发出</td>
+</tr>
+<tr>
+<td>D3</td>
+<td>松本</td>
+<td>松本站步行圈；<strong>能提前代收</strong>富山寄来的行李；<strong>可免费取消</strong></td>
+<td>21:00 后仍可 check-in</td>
+</tr>
+<tr>
+<td>D4</td>
+<td>平汤</td>
+<td>巴士总站步行圈；<strong>含晚餐</strong>；确认次日行李去向</td>
+<td>露天风吕、4 人和室、早餐便当</td>
+</tr>
+<tr>
+<td>D5</td>
+<td>高山</td>
+<td>高山站/浓飞巴士中心步行圈；能代收行李</td>
+<td>位置在站与三町古街之间</td>
+</tr>
+<tr>
+<td>D6-7</td>
+<td>金泽</td>
+<td>别住郊区（D8 中午赶机场巴士）</td>
+<td>见 D-C</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>「可免费取消」为什么是硬条件</strong>：立山黑部天气晴雨体验差 10 倍，网友通行做法是订可取消的房、提前 3 天看预报再决定冲不冲。这条只对 D2/D3 适用。</p>
+<p><strong>「能代收/代寄行李」为什么是硬条件</strong>：立山黑部（D3）和上高地（D5）都带不了大箱。已有实证——「富山住的是 livemax 很便宜但<strong>不支持行李寄存</strong>」。订之前必须问清，订完再问就晚了。</p>
+<h3>价格情报（与直觉相反）</h3>
+<ul>
+<li><strong>金泽便宜、选择多，旺季也便宜</strong>：「金泽酒店就是便宜，旺季也是」「不算热门地方，当天定都行」</li>
+<li><strong>富山反而贵</strong>：「富山旺季不便宜」「富山没有什么好的酒店」，被认为受立山黑部一带旺季拉动</li>
+</ul>
+<h3>候选清单（网友点名，<strong>均未经核实</strong>，自己挑）</h3>
+<p><strong>金泽</strong>
+| 名称 | 被提到的点 |
+|---|---|
+| mystays 金泽城堡店 | 有澡堂子，对面网红拉面「面屋大河」，离 JR 约 500m |
+| Hyatt House 金泽 | 房间带厨房洗衣机，步行 3 分钟到金泽站 |
+| 凯悦 / 日航 | 「不差钱就住凯悦，房间大离车站近」 |
+| Forza | 近江町市场 100m 内，高级双床房能摊开两个 28 寸箱，到站步行 7-8 分钟 |
+| 多美迎 Dormy Inn | 啤酒管够，适配近江町市场买的海鲜 |
+| daiwa roynet 金泽站旁 | 又新又大 |
+| 御宿野乃 | 早餐丰盛，有温泉 |</p>
+<p><strong>平汤温泉</strong>：深山樱庵 / mozumo / 湯の平館 / 平汤馆 Hirayukan / 风雪旅馆（带室内外私汤）</p>
+<h3>订房前必问（日文可直接抄）</h3>
+<pre><code>宅配便で荷物を先に送りたいのですが、宿泊前日に到着する荷物をお預かりいただけますか。
+（想先用宅急便寄行李，入住前一天到的行李能代收吗）
+
+チェックアウト後、荷物を次の宿泊先へ発送していただけますか。
+（退房后能帮忙把行李寄到下一个住处吗）
+
+連泊ではありませんが、4泊分の荷物を預かっていただくことは可能でしょうか。
+（不是连住，能寄存 4 晚的行李吗）
+</code></pre>
+<hr />
+<h2>三、行李动线（4 人 = 4 个大箱）</h2>
+<p>立山黑部（D3，换 6 种交通工具）和上高地（D5）<strong>都带不了大箱</strong>。</p>
+<p><strong>✅ 已拍板走方案 A</strong>（D-C 已确定不锁金泽同一家）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>方案 A：托运两次（确定采用）</th>
+<th>~~方案 B：金泽寄存~~（已排除）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>做法</td>
+<td>富山→松本、平汤→高山各托运一次</td>
+<td>~~D1 与 D6-7 锁同一家金泽酒店~~</td>
+</tr>
+<tr>
+<td>花费</td>
+<td>约 ¥2,000-3,000/件 × 4 件 × 2 次 ≈ <strong>¥16,000-24,000</strong></td>
+<td>¥0</td>
+</tr>
+<tr>
+<td>D2-D5 负重</td>
+<td>4 个大箱全程跟</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>同线路实测参考（反方向）：信浓大町站对面，办理 08:00–11:10，约 4,000 日元/件，<strong>只收现金</strong>，取件点电铁富山站。</p>
+<hr />
+<h2>四、⚠️ 待决事项</h2>
+<h3>D-A 白川乡（10/6）保不保</h3>
+<p>⚠️ 已核对小红书原图更正：「十一只剩收割后泥地」这条<strong>不成立</strong> —— 作者自己发的配图显示稻田金黄未收割，反而是加分项。
+真正坐实的风险是<strong>熊</strong>：有笔记拍到景区实际挂出「BEWARE OF BEARS / 注意熊出没」警示牌并封路（10/8）。红叶未到、雪未下属实，但不是减分到那种程度。详见 RESEARCH.md（含原始链接 + 三张配图）。
+- 保留 → 世遗打卡到了，10 月初实际是金黄稻田配合掌屋；若去，玩法是「先上展望台看全景，直走到最底三间小屋再往回逛，美景在后面」，留意熊出没管制
+- 换掉 → 腾出大半天，可给金泽休整购物 / 高山 / 上高地不赶（理由从「季节难看」改为「行程取舍」）</p>
+<h3>D-B 立山黑部：穿越 vs 从立山站往返</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>穿越（现行程）</th>
+<th>往返</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>换酒店</td>
+<td>6 次</td>
+<td><strong>5 次</strong>（省掉松本）</td>
+</tr>
+<tr>
+<td>行李托运</td>
+<td>1 次（¥16,000+）</td>
+<td><strong>0 次</strong></td>
+</tr>
+<tr>
+<td>体力</td>
+<td>单向前进</td>
+<td>原路折返，更累</td>
+</tr>
+<tr>
+<td>失去</td>
+<td>—</td>
+<td>扇泽、松本城</td>
+</tr>
+</tbody>
+</table></div>
+<p>⚠️ 需先确认立山站往返票能否到黑部水坝再折返。</p>
+<h3>D-C 金泽 3 晚是否锁同一家 → ✅ 已拍板：不锁</h3>
+<p>D1 已订的 Airbnb 是单晚整租（自助入住+仅 1 卫生间+楼梯陡），不适合承接 D6-7 的中途 4 晚寄存。D6-7 将另订。
+<strong>影响行李动线</strong>：下方「行李动线」的方案 B（金泽寄存）不再适用，默认走方案 A（托运两次，约 ¥16,000-24,000）。</p>
+<h3>D-D JR Pass 要不要买</h3>
+<p>「立山黑部、高山、松本区域 5 日周游券」含名古屋–松本–富山–高山的 JR <strong>以及立山黑部路线本身</strong>。
+⚠️ 不含上高地段（往返自费 ¥7,620）；⚠️ 覆盖范围以名古屋为中心，<strong>金泽是否包含需自行核实</strong>——我们小松进出、不去名古屋。</p>
+<h3>D-E 松本这一晚是不是有意加的</h3>
+<p>Flow 开头的路线摘要里没有松本，但 Day3 详细行程住松本。立山黑部从扇泽出来往西回不去富山，这晚在「穿越」方案下绕不掉——但值得群里确认，免得订完改路线。</p>
+<hr />
+<h2>五、行前提醒</h2>
+<p><strong>必须提前订</strong>：扇泽→松本特急巴士 · 松本→高山 JR · 高山→平汤/白川乡浓飞巴士（指定座位）· 白川乡→金泽巴士</p>
+<p><strong>衣物</strong>（中华民族问的）
+- 室堂 2450m：9–13℃，可能落雪，<strong>全身防水</strong> + 厚防风外套
+- 平汤/高山：早晚个位数
+- 金泽/富山市区：15–22℃，一件薄外套
+- 鞋：上高地普通运动鞋够；室堂建议防滑</p>
+<p><strong>现金</strong>：立山黑部沿线、平汤旅馆、白川乡小店、近江町市场摊位、行李托运（只收现金）多为现金。<strong>每人备 5–8 万日元。</strong>
+IC 卡（Suica/ICOCA）在北陆铁路和山区巴士基本用不了。</p>
+<p><strong>天气敏感点（阴雨可砍）</strong>：雨晴海岸 · 新穗高缆车 · 大观峰红叶</p>
+<p><strong>熊</strong>：上高地和白川乡都在活跃区，10 月是冬眠前觅食高峰。结伴同行。</p>
+</div>
+</body>
+</html>
