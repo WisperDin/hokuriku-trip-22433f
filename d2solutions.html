@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>D2 富山问题解决方案 · 十一日本红叶行</title>
+<style>
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f5f7;
+  --bg-tertiary:   #fbfbfd;
+  --bg-grouped:    #f2f2f7;
+  --bg-elevated:   #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary:  #aeaeb2;
+  --accent:        #0071e3;
+  --accent-hover:  #0077ed;
+  --tint-red:    #ff3b30;
+  --tint-orange: #ff9500;
+  --tint-green:  #34c759;
+  --separator:  rgba(60, 60, 67, .12);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 14px rgba(0,0,0,.08);
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg-secondary); }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "PingFang SC", "Helvetica Neue", "Arial", sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  padding-bottom: calc(48px + var(--safe-bottom));
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.85); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: .5px solid var(--separator);
+  padding: calc(12px + var(--safe-top)) 20px 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.topbar .back {
+  font-size: 15px; font-weight: 500; color: var(--accent);
+  display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+}
+.topbar nav { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.topbar nav::-webkit-scrollbar { display: none; }
+.topbar nav a {
+  flex-shrink: 0; padding: 6px 13px; border-radius: 980px;
+  background: var(--bg-grouped); color: var(--text-secondary);
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+}
+.topbar nav a.active { background: var(--accent); color: #fff; }
+
+.doc {
+  max-width: 760px; margin: 0 auto; padding: 28px 20px 20px;
+}
+.doc h1 {
+  font-size: 30px; font-weight: 700; letter-spacing: -0.02em;
+  margin: 0 0 6px; color: var(--text-primary);
+}
+.doc h2 {
+  font-size: 21px; font-weight: 700; margin: 36px 0 14px;
+  padding-top: 8px; border-top: .5px solid var(--separator);
+  letter-spacing: -0.01em;
+}
+.doc h1 + h2 { border-top: none; margin-top: 20px; }
+.doc h3 {
+  font-size: 17px; font-weight: 650; margin: 24px 0 10px;
+  color: var(--text-primary);
+}
+.doc h4 { font-size: 15px; font-weight: 650; margin: 18px 0 8px; color: var(--text-secondary); }
+.doc p { margin: 0 0 14px; font-size: 15px; color: var(--text-primary); }
+.doc ul, .doc ol { margin: 0 0 14px; padding-left: 22px; font-size: 15px; }
+.doc li { margin-bottom: 6px; }
+.doc li > ul, .doc li > ol { margin-top: 6px; margin-bottom: 0; }
+.doc strong { font-weight: 650; }
+.doc blockquote {
+  margin: 0 0 14px; padding: 10px 16px; background: var(--bg-grouped);
+  border-radius: var(--radius-md); border-left: 3px solid var(--accent);
+  color: var(--text-secondary); font-size: 14px;
+}
+.doc blockquote p:last-child { margin-bottom: 0; }
+.doc code {
+  background: var(--bg-grouped); padding: 2px 6px; border-radius: 5px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px;
+}
+.doc pre {
+  background: #1d1d1f; color: #f5f5f7; padding: 16px; border-radius: var(--radius-md);
+  overflow-x: auto; margin: 0 0 14px; font-size: 13px; line-height: 1.55;
+  -webkit-overflow-scrolling: touch;
+}
+.doc pre code { background: none; padding: 0; color: inherit; }
+.doc hr { border: none; border-top: .5px solid var(--separator); margin: 28px 0; }
+.doc .table-wrap { overflow-x: auto; margin: 0 0 16px; -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+.doc table { border-collapse: collapse; width: 100%; font-size: 14px; background: var(--bg-elevated); }
+.doc th, .doc td { padding: 10px 14px; text-align: left; border-bottom: .5px solid var(--separator); }
+.doc th { background: var(--bg-grouped); font-weight: 650; color: var(--text-secondary);
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+.doc tr:last-child td { border-bottom: none; }
+.doc td del, .doc th del { color: var(--text-tertiary); }
+.doc img { max-width: 100%; border-radius: var(--radius-md); margin: 8px 0; }
+.meta-bar {
+  font-size: 13px; color: var(--text-secondary); margin-bottom: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-primary: #000; --bg-secondary: #000; --bg-tertiary: #1c1c1e;
+    --bg-grouped: #1c1c1e; --bg-elevated: #1c1c1e;
+    --text-primary: #f5f5f7; --text-secondary: #98989d; --text-tertiary: #6e6e73;
+    --separator: rgba(84,84,88,.6);
+  }
+  :root:not([data-theme="light"]) .topbar { background: rgba(0,0,0,.85); }
+  :root:not([data-theme="light"]) .doc pre { background: #1c1c1e; }
+}
+:root[data-theme="dark"] {
+  --bg-primary: #000; --bg-secondary: #000; --bg-tertiary: #1c1c1e;
+  --bg-grouped: #1c1c1e; --bg-elevated: #1c1c1e;
+  --text-primary: #f5f5f7; --text-secondary: #98989d; --text-tertiary: #6e6e73;
+  --separator: rgba(84,84,88,.6);
+}
+:root[data-theme="dark"] .topbar { background: rgba(0,0,0,.85); }
+:root[data-theme="dark"] .doc pre { background: #1c1c1e; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">← 主页</a>
+  <nav>
+    <a href="plan.html" class="">计划</a>
+    <a href="lodging.html" class="">住宿</a>
+    <a href="script.html" class="">推演</a>
+    <a href="d2solutions.html" class="active">D2方案</a>
+    <a href="map.html" class="">地图</a>
+  </nav>
+</div>
+<div class="doc">
+<h1>D2 富山（10/2）问题解决方案</h1>
+<p>针对 SCRIPT.md 推演出的 4 个 TODO，逐条给方案。小红书调研 3 篇笔记 + 逻辑推演，2026-09-10。</p>
+<hr />
+<h2>✅ TODO 1：行李动线 —— 已解决</h2>
+<p><strong>方案：高冈站 2F 投币柜寄存</strong>，去程存、回程取，不用拖着 4 个大箱进出雨晴海岸。</p>
+<p>两篇独立笔记互相印证同一个流程：</p>
+<blockquote>
+<p>「高冈车站 1F 和 2F 都有 locker。1F 的 locker 没有换硬币的地方，要坐小电梯到 2F 卖土特产的店去换。<strong>大行李存放箱是 800 日元</strong>。【推荐】另外一个存放点是 2F，和 JR 线在同一个地方，坐扶梯上去就有，<strong>而且可以直接换硬币</strong>」</p>
+<p>「金泽到富山可以直接乘坐 IR 近铁……我们想去雨晴海岸所以做到高冈站下车寄存行李」</p>
+</blockquote>
+<p><strong>执行步骤</strong>：
+1. 金泽站 → 高冈站（IC 卡可直接进出）
+2. 到高冈站 <strong>2F</strong>（和 JR 线同层，扶梯上去就有）找投币柜寄存 4 个大箱，<strong>每箱约 800 日元，优先用 2F 这个能直接换硬币的点</strong>，别去 1F 那个还要跑去土特产店换硬币的
+3. 轻装换乘冰见线去雨晴海岸
+4. 玩完原路返回高冈站，取行李
+5. 继续乘车去富山</p>
+<p>⚠️ <strong>一个新发现，行程表原来没有的</strong>：<strong>冰见线不能刷 IC 卡（西瓜卡）</strong>，两篇笔记都单独提到这条：</p>
+<blockquote>
+<p>「后来发现里面写了冰见线（也就是去雨晴海岸的）不能用 IC 卡……需要把手机递给他，他系统上可以操作取消西瓜卡的支付。然后再出去买实体车票」
+「冰见线是需要在自助机购买的，可以把回程的票直接也买了，也可以到了雨晴买回程」</p>
+</blockquote>
+<p><strong>建议</strong>：到高冈站换乘冰见线时，直接去自助售票机买票（去程+回程一起买，省得回来现找），别刷 IC 卡直接进站，会被拦下来处理，浪费时间。雨晴站检票是人工老爷爷，简单英语沟通即可。</p>
+<hr />
+<h2>⚠️ TODO 2：中午没饭吃 —— 给合理建议，未深度调研</h2>
+<p>没有搜到直接命中"雨晴海岸/富山中午吃什么"的笔记。给一个不依赖额外调研的解决方案：</p>
+<p><strong>建议</strong>：从雨晴海岸返回高冈取行李后，直接在<strong>高冈站或富山站</strong>解决午饭（两站都是大站，站内/站前都有餐饮选择），不用特意规划具体某一家——这顿饭的目标是"吃饱接上下午行程"，不是"打卡名店"。真正的美食重点已经留给了晚上的黑拉面（西町大喜）和第二天近江町市场的海鲜丼，中午从简完全合理。</p>
+<hr />
+<h2>✅ TODO 3：环水公园 vs 玻璃美术馆顺序冲突 —— 逻辑已解决</h2>
+<p>不需要调研，纯行程顺序问题：</p>
+<p><strong>原顺序</strong>（有冲突）：14:30 环水公园 → 16:00 玻璃美术馆 → 会错过 16:00-16:30 的日落
+<strong>改后顺序</strong>：14:30-15:45 玻璃美术馆 → 15:45 走去环水公园（两地相距约 200m，步行 3 分钟）→ 16:00-16:30 在环水公园看日落染红立山连峰</p>
+<p>两个点挨得很近，调换顺序不影响停留时长，白拿一个日落窗口。</p>
+<hr />
+<h2>⚪ TODO 4：雨天备选 —— 给方案，未做专项调研</h2>
+<p><strong>建议</strong>：如果当天阴雨看不到立山连峰，雨晴海岸这一段直接跳过，把腾出的上午时间并入富山市区深度游：环水公园（不含日落也值得逛）、玻璃美术馆、富山城公园、黑拉面/白虾刺身午饭提前吃。这些都是室内或市区内的点，阴雨天影响小，逻辑上顺畅，不需要额外找新地点。</p>
+<hr />
+<h2>汇总：D2 更新后的时间线</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>时间</th>
+<th>地点</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>07:30-08:00</td>
+<td>金泽站出发</td>
+<td>JR 至高冈</td>
+</tr>
+<tr>
+<td>约 08:50</td>
+<td>高冈站</td>
+<td><strong>2F 投币柜寄存 4 个大箱（约¥800/箱）</strong>，换冰见线<strong>自助机买票</strong>（不能刷 IC 卡）</td>
+</tr>
+<tr>
+<td>09:30-11:00</td>
+<td>雨晴海岸</td>
+<td>看海拍照。阴雨可直接跳过，见 TODO 4</td>
+</tr>
+<tr>
+<td>约 12:00</td>
+<td>高冈站</td>
+<td>取行李，简单觅食午饭</td>
+</tr>
+<tr>
+<td>约 13:00</td>
+<td>富山站</td>
+<td>IC 卡可直接进出</td>
+</tr>
+<tr>
+<td>14:30-15:45</td>
+<td>玻璃美术馆</td>
+<td><strong>顺序已调整</strong>，先来这里</td>
+</tr>
+<tr>
+<td>15:45-16:30</td>
+<td>环水公园</td>
+<td>走过去 3 分钟，正好接上 16:00-16:30 日落</td>
+</tr>
+<tr>
+<td>18:30</td>
+<td>西町大喜</td>
+<td>富山黑拉面晚饭</td>
+</tr>
+<tr>
+<td>约 20:00</td>
+<td>富山住宿</td>
+<td>见 LODGING.md D2 候选</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</body>
+</html>

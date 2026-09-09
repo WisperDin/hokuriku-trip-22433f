@@ -268,27 +268,28 @@ const DAYS = [
       desc: '重点：看海。日本百大海岸，晴天可见「海上立山连峰」',
       detail: '金泽站 → JR 约 1h20（需在高冈换冰见线）\n⚠️ 强天气依赖：阴天/雾天看不到连峰，雨天可直接跳过改去富山市内\n💡 网友：岩濑浜「海岸线比雨晴人更少也更漂亮」，可替换或加订',
       budget: '¥1,110', pay: { cash: 1 }, xhsKeyword: '雨晴海岸', gmap: 'Amaharashi+Coast' },
-    { name: '高冈站（换乘点）', lat: 36.7397, lng: 137.0154, type: 'transport', time: '—',
+    { name: '高冈站（行李寄存点）', lat: 36.7397, lng: 137.0154, type: 'transport', time: '—',
       desc: '金泽↔雨晴的换乘站，冰见线班次稀疏，务必先查时刻表',
+      detail: '✅ 大箱寄存 2F 投币柜（约¥800/箱），和 JR 线同层、可直接换硬币，比 1F 方便\n⚠️ 冰见线不能刷 IC 卡，去程回程车票在自助机一起买',
       gmap: 'Takaoka+Station' },
-    { name: '富岩运河环水公园', lat: 36.7043, lng: 137.2118, type: 'spot', time: '14:30',
+    { name: '富山市玻璃美术馆', lat: 36.6919, lng: 137.2129, type: 'spot', time: '14:30',
+      desc: '隈研吾设计的 TOYAMA キラリ，建筑本身就是主角',
+      budget: '¥200', detail: '周三闭馆 —— 10/2 是周五，没问题\n✅ 顺序已调整：先来这里，再走 3 分钟去环水公园接日落',
+      pay: { cash: 1, card: 1 }, gmap: 'Toyama+Glass+Art+Museum' },
+    { name: '富岩运河环水公园', lat: 36.7043, lng: 137.2118, type: 'spot', time: '15:45',
       desc: '公园本体 + 「世界最美星巴克」环水公园店',
-      budget: '',
-      detail: '富山站步行约 10 分钟\n💡 16:00-16:30 落日会把立山连峰染成粉色，市区随便找个开阔处就能看\n傍晚点灯后运河夜景也不错',
+      detail: '从玻璃美术馆步行约 3 分钟\n💡 16:00-16:30 落日会把立山连峰染成粉色\n傍晚点灯后运河夜景也不错',
       pay: { cash: 1, card: 1, suica: 1 }, xhsKeyword: '富山 环水公园 星巴克',
       gmap: 'Fugan+Unga+Kansui+Park+Toyama' },
-    { name: '富山市玻璃美术馆', lat: 36.6919, lng: 137.2129, type: 'spot', time: '16:00',
-      desc: '隈研吾设计的 TOYAMA キラリ，建筑本身就是主角',
-      budget: '¥200', detail: '周三闭馆 —— 10/2 是周五，没问题',
-      pay: { cash: 1, card: 1 }, gmap: 'Toyama+Glass+Art+Museum' },
     { name: '西町大喜（富山黑拉面）', lat: 36.6905, lng: 137.2152, type: 'food', time: '18:30',
       desc: '候选，未实地调研。富山ブラック 的元祖店，群里 Flow 发的视频吐槽过「真的太苦了」',
       budget: '¥1,000', detail: '重口酱油汤底，配白饭吃\n不吃咸的可换富山湾寿司',
       pay: { cash: 1 }, dianping: 'search', dianpingKeyword: '西町大喜 富山',
       xhsKeyword: '富山黑拉面', gmap: 'Nishicho+Taiki+Toyama' },
-    { name: '富山市（住宿待定）', lat: 36.7014, lng: 137.2137, type: 'hotel', time: '20:00',
-      desc: '⚠️ 未预订。硬条件：站步行圈 + 前台能代寄宅急便 + 可免费取消',
-      detail: '次日一早在电铁富山站坐车进立山，别住远\n大件行李今晚就要寄去松本\n⚠️ 订可免费取消的房：立山天气晴雨体验差 10 倍，提前 3 天看预报再定\n⚠️ 实证有酒店不支持行李寄存（如 livemax），订前必问\n💡 富山旺季比金泽贵，且「没什么好酒店」',
+    { name: '富山市（住宿候选：SHOGUN HOUSE）', lat: 36.7014, lng: 137.2137, type: 'hotel', time: '20:00',
+      desc: '⚠️ 未预订。硬条件：站步行圈 + 可免费取消（代寄行李已改高冈站柜子，见上）',
+      detail: '首选 SHOGUN HOUSE：站步行 7 分钟，4 卧 9 床 1.5 卫，¥1,854/晚，5.0★，免费取消至 9/27\n备选：きまち亭（站步行 10 分钟，5 卧但只 1 卫）／HOME STAY COCCHI（最便宜但入住窗口 15:00-20:00 偏紧）\n次日一早在电铁富山站坐车进立山，别住远\n⚠️ 订可免费取消的房：立山天气晴雨体验差 10 倍，提前 3 天看预报再定',
+      reserve: 'https://www.airbnb.cn/rooms/1396261240139253043',
       gmap: 'Toyama+Station' }
   ]},
 
@@ -480,6 +481,7 @@ function overviewContent() {
 
 const map = L.map('map', { center: [HOTEL.lat || 35.69, HOTEL.lng || 139.74], zoom: 12, zoomControl: false, attributionControl: true });
 L.control.zoom({ position: 'topright' }).addTo(map);
+
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map);
 
 /* ── Geolocation ── */
