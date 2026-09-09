@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>十一日本红叶行 · 行程地图</title>
+<meta name="description" content="2026年十一 日本北陆红叶行 8天7晚 · 金泽 立山黑部 上高地 白川乡 · 交互行程地图">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+/* ═══════════════════════════════════════════
+   Design System — edit :root to change theme
+   ═══════════════════════════════════════════ */
+:root {
+  --bg-primary:    #ffffff;
+  --bg-secondary:  #f5f5f7;
+  --bg-tertiary:   #fbfbfd;
+  --bg-grouped:    #f2f2f7;
+  --bg-elevated:   #ffffff;
+  --text-primary:   #1d1d1f;
+  --text-secondary: #86868b;
+  --text-tertiary:  #aeaeb2;
+  --accent:        #0071e3;
+  --accent-hover:  #0077ed;
+  --tint-red:    #ff3b30;
+  --tint-orange: #ff9500;
+  --tint-green:  #34c759;
+  --tint-blue:   #007aff;
+  --tint-purple: #af52de;
+  --tint-pink:   #ff2d55;
+  --separator:  rgba(60, 60, 67, .12);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 14px rgba(0,0,0,.08);
+  --shadow-lg:  0 8px 30px rgba(0,0,0,.12);
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "Helvetica Neue", "Arial", sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.47059;
+  letter-spacing: -0.022em;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── Map ── */
+#map { width: 100%; height: 40vh; min-height: 280px; position: sticky; top: 0; z-index: 100; }
+.locate-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+  border: none; box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.locate-btn.active { color: #007aff; }
+@keyframes loc-pulse {
+  0%   { transform: scale(1); opacity: .55; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.loc-pulse {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: rgba(0,122,255,.25);
+  animation: loc-pulse 1.6s ease-out infinite;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background: rgba(255,255,255,.85); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px); position: sticky; top: 40vh; z-index: 99;
+  border-bottom: .5px solid var(--separator); scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+  flex-shrink: 0; padding: 7px 16px; border-radius: 980px; border: none;
+  background: var(--bg-grouped); color: var(--text-secondary);
+  font-size: 14px; font-weight: 500; cursor: pointer; transition: all .25s ease;
+  white-space: nowrap; letter-spacing: -0.01em;
+}
+.tab:active { transform: scale(.96); }
+.tab.active { background: var(--accent); color: #fff; }
+
+/* ── Main content ── */
+.content { max-width: 680px; margin: 0 auto; padding: 16px 16px calc(24px + var(--safe-bottom)); }
+
+/* ── Overview ── */
+.hero { text-align: center; padding: 28px 20px 20px; }
+.hero h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; }
+.hero .subtitle { font-size: 17px; color: var(--text-secondary); margin-top: 6px; font-weight: 400; }
+
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.info-card { background: var(--bg-elevated); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow-sm); }
+.info-card .label { font-size: 12px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 6px; }
+.info-card .value { font-size: 15px; font-weight: 600; line-height: 1.4; }
+
+/* ── Section headers ── */
+.section-head { font-size: 13px; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .03em; padding: 20px 0 8px; }
+
+/* ── Day header ── */
+.day-head { padding: 20px 0 12px; }
+.day-head h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.day-head p { font-size: 15px; color: var(--text-secondary); margin-top: 2px; }
+
+/* ── Route bar ── */
+.route-bar { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 14px; box-shadow: var(--shadow-sm); font-size: 13px; color: var(--text-secondary); line-height: 1.7; white-space: pre-line; }
+.route-bar strong { color: var(--text-primary); }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 24px; }
+.timeline::before { content: ''; position: absolute; left: 7px; top: 20px; bottom: 20px; width: 1.5px; background: var(--separator); }
+.tl-item { position: relative; margin-bottom: 10px; }
+.tl-dot { position: absolute; left: -20px; top: 18px; width: 10px; height: 10px; border-radius: 50%; z-index: 1; box-shadow: 0 0 0 3px var(--bg-secondary); }
+.tl-dot.food    { background: var(--tint-red); }
+.tl-dot.spot    { background: var(--tint-blue); }
+.tl-dot.hotel   { background: var(--tint-orange); }
+.tl-dot.drink   { background: var(--tint-purple); }
+.tl-dot.transport { background: var(--text-tertiary); }
+
+/* ── Card ── */
+.card { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); transition: box-shadow .25s ease; cursor: pointer; }
+.card:active { box-shadow: var(--shadow-md); }
+.card .time { font-size: 12px; font-weight: 600; color: var(--text-tertiary); letter-spacing: .01em; }
+.card .name { font-size: 17px; font-weight: 600; margin: 2px 0 4px; letter-spacing: -0.01em; display: flex; align-items: center; gap: 6px; }
+.card .desc { font-size: 14px; color: var(--text-secondary); line-height: 1.45; }
+
+/* Badge */
+.badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; }
+.badge.food   { background: rgba(255,59,48,.1);  color: var(--tint-red); }
+.badge.spot   { background: rgba(0,122,255,.1);  color: var(--tint-blue); }
+.badge.drink  { background: rgba(175,82,222,.1); color: var(--tint-purple); }
+
+/* Budget */
+.budget { display: inline-block; margin-top: 6px; padding: 3px 10px; background: var(--bg-grouped); border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); font-weight: 500; }
+
+/* Payment */
+.pays { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.pay { font-size: 11px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+.pay.ok  { background: rgba(52,199,89,.1);  color: var(--tint-green); }
+.pay.no  { background: rgba(255,59,48,.08); color: var(--tint-red); }
+.pay.idk { background: rgba(255,149,0,.1);  color: var(--tint-orange); }
+
+/* Links row */
+.links { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; border: none; cursor: pointer;
+  text-decoration: none !important; transition: filter .2s;
+}
+.btn:active { filter: brightness(.9); }
+.btn.nav    { background: var(--accent); color: #fff; }
+.btn.xhs    { background: #ff2442; color: #fff; }
+.btn.dp     { background: #ffa700; color: #fff; }
+.btn.rsv    { background: var(--tint-green); color: #fff; }
+
+/* Action Sheet */
+.as-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(2px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity .25s;
+}
+.as-overlay.show { opacity: 1; pointer-events: auto; }
+.as-sheet {
+  width: 100%; max-width: 420px;
+  padding: 0 8px 34px;
+  transform: translateY(100%); transition: transform .3s cubic-bezier(.22,1,.36,1);
+}
+.as-overlay.show .as-sheet { transform: translateY(0); }
+.as-group {
+  background: rgba(255,255,255,.88); backdrop-filter: blur(20px);
+  border-radius: 14px; overflow: hidden; margin-bottom: 8px;
+}
+.as-group .as-item {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px; font-size: 18px; color: #007aff; font-weight: 500;
+  border: none; background: none; width: 100%; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.as-group .as-item + .as-item { border-top: .5px solid rgba(0,0,0,.12); }
+.as-group .as-item:active { background: rgba(0,0,0,.06); }
+.as-cancel { font-weight: 600; }
+
+/* Details — default open */
+.details {
+  margin-top: 10px; padding-top: 10px;
+  border-top: .5px solid var(--separator);
+  font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+}
+.details.closed { display: none; }
+
+/* ── Overview day list ── */
+.day-list .card { margin-bottom: 8px; }
+.day-list .card .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+
+/* ── Payment summary ── */
+.pay-summary { background: var(--bg-elevated); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); font-size: 13px; line-height: 1.7; margin-bottom: 10px; }
+.pay-summary h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.pay-summary .warn { color: var(--tint-red); }
+.pay-summary .ok-text { color: var(--tint-green); }
+
+/* ── Legend ── */
+.legend { display: flex; gap: 14px; flex-wrap: wrap; padding: 8px 0; font-size: 12px; color: var(--text-secondary); }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── Leaflet overrides ── */
+.leaflet-popup-content-wrapper { border-radius: var(--radius-md) !important; box-shadow: var(--shadow-lg) !important; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important; }
+.leaflet-popup-content { font-size: 14px !important; line-height: 1.5 !important; margin: 12px 14px !important; }
+.leaflet-popup-content a { color: var(--accent) !important; }
+.leaflet-popup-tip { background: #fff !important; }
+.leaflet-control-zoom a { width: 34px !important; height: 34px !important; line-height: 34px !important; font-size: 16px !important; border-radius: 10px !important; background: rgba(255,255,255,.85) !important; -webkit-backdrop-filter: blur(10px) !important; backdrop-filter: blur(10px) !important; border: .5px solid var(--separator) !important; color: var(--text-primary) !important; }
+.leaflet-control-zoom { border-radius: 12px !important; overflow: hidden; box-shadow: var(--shadow-md) !important; border: none !important; }
+.leaflet-control-attribution { font-size: 9px !important; opacity: .5; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="tabs" id="tabs"></div>
+<div class="content" id="content"></div>
+
+<script>
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  REPLACE THIS SECTION — Hotel and Days data                 ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const HOTEL = { name: '金泽站（住宿全部待定）', lat: 36.5780, lng: 136.6480 };
+
+const DAYS = [
+  { id: 0, label: '总览', color: '#0071e3', locations: [] },
+
+  { id: 1, label: 'D1', date: '10/1 周四', title: '香港 → 小松 → 金泽', color: '#ff9500', locations: [
+    { name: '小松机场 KMQ', lat: 36.3946, lng: 136.4066, type: 'transport', time: '14:35',
+      desc: '落地。北陆铁道机场巴士约 45 分钟直达金泽站',
+      budget: '¥1,300', detail: '巴士在到达口外，班次对准航班\n若人多可考虑打车分摊',
+      pay: { cash: 1, card: 0.5 }, gmap: 'Komatsu+Airport' },
+    { name: '金泽站（住宿待定）', lat: 36.5780, lng: 136.6480, type: 'hotel', time: '16:30',
+      desc: '⚠️ 未预订。硬条件：站步行 ≤8 分钟 + 能代收/寄存行李',
+      detail: '晚到早出，别住远\n若采用「金泽 3 晚锁同一家」方案，大箱可寄存在这里 4 晚',
+      gmap: 'Kanazawa+Station' },
+    { name: '东茶屋街', lat: 36.5723, lng: 136.6664, type: 'spot', time: '17:30',
+      desc: '江户风情茶屋街，傍晚灯笼亮起最好看',
+      detail: '离站约 15 分钟巴士\n店铺 17:00-18:00 陆续关，逛街拍照为主',
+      pay: { cash: 1, card: 0.5 }, gmap: 'Higashi+Chaya+District+Kanazawa' },
+    { name: '金泽站周边晚餐', lat: 36.5766, lng: 136.6493, type: 'food', time: '19:30',
+      desc: '区域候选（未调研）。站内 Anto 百番街有一圈店，落地首晚不折腾',
+      budget: '¥2,000-3,500', pay: { cash: 1, card: 1 },
+      dianping: 'search', dianpingKeyword: '金泽站 居酒屋', xhsKeyword: '金泽站 美食',
+      gmap: 'Kanazawa+Station+Anto' }
+  ]},
+
+  { id: 2, label: 'D2', date: '10/2 周五', title: '雨晴海岸看海 → 富山', color: '#0071e3', locations: [
+    { name: '雨晴海岸', lat: 36.7935, lng: 137.0033, type: 'spot', time: '09:30',
+      desc: '重点：看海。日本百大海岸，晴天可见「海上立山连峰」',
+      detail: '金泽站 → JR 约 1h20（需在高冈换冰见线）\n⚠️ 强天气依赖：阴天/雾天看不到连峰，雨天可直接跳过改去富山市内',
+      budget: '¥1,110', pay: { cash: 1 }, xhsKeyword: '雨晴海岸', gmap: 'Amaharashi+Coast' },
+    { name: '高冈站（换乘点）', lat: 36.7397, lng: 137.0154, type: 'transport', time: '—',
+      desc: '金泽↔雨晴的换乘站，冰见线班次稀疏，务必先查时刻表',
+      gmap: 'Takaoka+Station' },
+    { name: '富岩运河环水公园', lat: 36.7043, lng: 137.2118, type: 'spot', time: '14:30',
+      desc: '公园本体 + 「世界最美星巴克」环水公园店',
+      detail: '富山站步行约 10 分钟\n傍晚点灯后运河夜景也不错',
+      pay: { cash: 1, card: 1, suica: 1 }, xhsKeyword: '富山 环水公园 星巴克',
+      gmap: 'Fugan+Unga+Kansui+Park+Toyama' },
+    { name: '富山市玻璃美术馆', lat: 36.6919, lng: 137.2129, type: 'spot', time: '16:00',
+      desc: '隈研吾设计的 TOYAMA キラリ，建筑本身就是主角',
+      budget: '¥200', detail: '周三闭馆 —— 10/2 是周五，没问题',
+      pay: { cash: 1, card: 1 }, gmap: 'Toyama+Glass+Art+Museum' },
+    { name: '西町大喜（富山黑拉面）', lat: 36.6905, lng: 137.2152, type: 'food', time: '18:30',
+      desc: '候选，未实地调研。富山ブラック 的元祖店，群里 Flow 发的视频吐槽过「真的太苦了」',
+      budget: '¥1,000', detail: '重口酱油汤底，配白饭吃\n不吃咸的可换富山湾寿司',
+      pay: { cash: 1 }, dianping: 'search', dianpingKeyword: '西町大喜 富山',
+      xhsKeyword: '富山黑拉面', gmap: 'Nishicho+Taiki+Toyama' },
+    { name: '富山市（住宿待定）', lat: 36.7014, lng: 137.2137, type: 'hotel', time: '20:00',
+      desc: '⚠️ 未预订。硬条件：JR/电铁富山站步行圈 + 前台能代寄宅急便',
+      detail: '次日一早在电铁富山站坐车进立山，别住远\n大件行李今晚就要寄去松本',
+      gmap: 'Toyama+Station' }
+  ]},
+
+  { id: 3, label: 'D3', date: '10/3 周六', title: '立山黑部阿尔卑斯路线 → 松本', color: '#ff3b30', locations: [
+    { name: '立山站（进山口）', lat: 36.5817, lng: 137.4319, type: 'transport', time: '07:30',
+      desc: '电铁富山站出发约 1 小时。全天要换 6 种交通工具',
+      detail: '⚠️ 十一旺季，缆车限流排队，越早越好\n大件行李已寄走，只带随身包',
+      pay: { cash: 1, card: 0.5 }, gmap: 'Tateyama+Station+Toyama' },
+    { name: '美女平', lat: 36.5769, lng: 137.4650, type: 'transport', time: '08:20',
+      desc: '登山缆车终点，转高原巴士', gmap: 'Bijodaira' },
+    { name: '室堂（海拔 2450m）', lat: 36.5775, lng: 137.5945, type: 'spot', time: '10:00',
+      desc: '重点：全线最高点。10 月初可能已落雪，御库里池雪山倒影',
+      detail: '⚠️ 气温接近 0°C，必须厚外套 + 防滑鞋\n留 1-1.5 小时走御库里池一圈',
+      pay: { cash: 1 }, xhsKeyword: '立山黑部 室堂', gmap: 'Murodo+Tateyama' },
+    { name: '大观峰', lat: 36.5773, lng: 137.6237, type: 'spot', time: '12:30',
+      desc: '观景台，俯瞰黑部湖 + 后立山连峰，「三段红叶」的最佳位置',
+      xhsKeyword: '大观峰 立山黑部', gmap: 'Daikanbo+Tateyama' },
+    { name: '黑部平', lat: 36.5747, lng: 137.6355, type: 'spot', time: '13:30',
+      desc: '空中索道下站，红叶带核心区', gmap: 'Kurobedaira' },
+    { name: '黑部水坝', lat: 36.5661, lng: 137.6636, type: 'spot', time: '14:30',
+      desc: '重点：徒步走过坝顶。日本最高拱坝，10 月中旬前有观光放水',
+      detail: '坝顶到扇泽还要走一段 + 电气巴士\n⚠️ 坐标为水坝本体，走位以现场指示为准',
+      xhsKeyword: '黑部水坝', gmap: 'Kurobe+Dam' },
+    { name: '扇泽站（出山口）', lat: 36.5679, lng: 137.7013, type: 'transport', time: '16:00',
+      desc: '出山。转特急巴士至松本约 2 小时',
+      detail: '⚠️ 到松本的巴士班次少，务必提前订票',
+      pay: { cash: 1 }, gmap: 'Ogizawa+Station' },
+    { name: '松本市（住宿待定）', lat: 36.2381, lng: 137.9670, type: 'hotel', time: '18:30',
+      desc: '⚠️ 未预订。硬条件：松本站步行圈 + 能提前代收富山寄来的行李',
+      detail: '「能代收行李」这条是硬门槛，订之前必须先问清楚',
+      gmap: 'Matsumoto+Station' },
+    { name: '松本城（如有余力）', lat: 36.2387, lng: 137.9690, type: 'spot', time: '—',
+      desc: '国宝五重天守。当天大概率来不及进馆，夜间打光的外观值得走一趟',
+      budget: '¥700', xhsKeyword: '松本城', gmap: 'Matsumoto+Castle' }
+  ]},
+
+  { id: 4, label: 'D4', date: '10/4 周日', title: '松本 → 新穗高缆车 → 平汤温泉', color: '#af52de', locations: [
+    { name: '高山站（换乘）', lat: 36.1440, lng: 137.2517, type: 'transport', time: '11:00',
+      desc: '松本乘 JR 至高山，转浓飞巴士至平汤温泉约 1.5 小时',
+      detail: '浓飞巴士中心就在站旁\n⚠️ 高速巴士十一必须预订',
+      pay: { cash: 1, card: 0.5 }, gmap: 'Takayama+Station' },
+    { name: '新穗高缆车', lat: 36.2447, lng: 137.5637, type: 'spot', time: '14:00',
+      desc: '日本唯一双层缆车，直上 2156m 西穗高口俯瞰北阿尔卑斯',
+      budget: '¥3,800 往返', detail: '平汤温泉乘巴士约 25 分钟\n⚠️ 云雾天视野为零，出发前看山顶实时摄像头再决定',
+      pay: { cash: 1, card: 1 }, xhsKeyword: '新穗高缆车', gmap: 'Shinhotaka+Ropeway' },
+    { name: '平汤温泉（住宿待定）', lat: 36.1730, lng: 137.5545, type: 'hotel', time: '17:30',
+      desc: '⚠️ 未预订。硬条件：巴士总站步行圈 + 一泊二食 + 露天风吕',
+      detail: '⚠️ 平汤晚上几乎没有营业的餐馆，不含晚餐会饿肚子\n次日 5-6 点首班车进上高地，住总站旁最省事\n十一旺季房源极紧张',
+      budget: '¥15,000-25,000/人', pay: { cash: 1, card: 0.5 },
+      xhsKeyword: '平汤温泉 旅馆', gmap: 'Hirayu+Onsen' },
+    { name: '平汤巴士总站', lat: 36.1740, lng: 137.5540, type: 'transport', time: '—',
+      desc: '奥飞驒交通枢纽。有投币储物柜 —— 次日进上高地的行李寄存点',
+      detail: '⚠️ 次日晚住高山、不回平汤，行李动线要提前和旅馆确认',
+      gmap: 'Hirayu+Onsen+Bus+Terminal' }
+  ]},
+
+  { id: 5, label: 'D5', date: '10/5 周一', title: '上高地完整徒步 → 高山', color: '#34c759', locations: [
+    { name: '上高地巴士总站', lat: 36.2500, lng: 137.6317, type: 'transport', time: '06:30',
+      desc: '徒步起终点。平汤温泉乘巴士约 25 分钟',
+      detail: '⚠️ 上高地全年禁止私家车\n有存包处，大件建议留平汤',
+      pay: { cash: 1 }, gmap: 'Kamikochi+Bus+Terminal' },
+    { name: '河童桥', lat: 36.2517, lng: 137.6333, type: 'spot', time: '07:00',
+      desc: '上高地地标。背后穗高连峰 + 梓川清流，晨雾时段最美',
+      xhsKeyword: '上高地 河童桥', gmap: 'Kappa+Bridge+Kamikochi' },
+    { name: '明神桥', lat: 36.2596, lng: 137.6540, type: 'spot', time: '08:30',
+      desc: '沿梓川右岸步行约 1 小时。过桥去明神池',
+      gmap: 'Myojin+Bridge+Kamikochi' },
+    { name: '穗高神社奥宫 & 明神池', lat: 36.2604, lng: 137.6555, type: 'spot', time: '09:00',
+      desc: '重点：一之池二之池，水面倒影 + 红叶。10 月上旬正值最盛期',
+      budget: '¥500', pay: { cash: 1 },
+      xhsKeyword: '明神池 上高地', gmap: 'Myojin+Pond+Hotaka+Shrine' },
+    { name: '岳泽湿原', lat: 36.2528, lng: 137.6404, type: 'spot', time: '10:30',
+      desc: '回程走左岸木栈道，湿原 + 枯木 + 倒影，人比右岸少',
+      detail: '全程约 5.6km / 2-2.5 小时\n⚠️ 有熊出没，结伴 + 熊铃',
+      gmap: 'Dakesawa+Wetland+Kamikochi' },
+    { name: '高山 三町古街', lat: 36.1418, lng: 137.2610, type: 'spot', time: '16:30',
+      desc: '江户町屋老街，飞驒牛握寿司/串烧沿街吃',
+      detail: '店铺多在 17:00 关，早点到\n⚠️ 上高地→平汤取行李→高山，预留足够时间',
+      pay: { cash: 1, card: 0.5 }, xhsKeyword: '高山 三町 古街',
+      dianping: 'search', dianpingKeyword: '高山 飞驒牛', gmap: 'Sanmachi+Suji+Takayama' },
+    { name: '高山（住宿待定）', lat: 36.1440, lng: 137.2517, type: 'hotel', time: '19:00',
+      desc: '⚠️ 未预订。硬条件：高山站/浓飞巴士中心步行圈，最好在站与古街之间',
+      detail: '次日一早从浓飞巴士中心发车去白川乡',
+      gmap: 'Takayama+Station' }
+  ]},
+
+  { id: 6, label: 'D6', date: '10/6 周二', title: '白川乡合掌村 → 金泽', color: '#ff2d55', locations: [
+    { name: '白川乡 荻町合掌造集落', lat: 36.2578, lng: 136.9063, type: 'spot', time: '09:30',
+      desc: '世界遗产。高山乘浓飞巴士约 50 分钟',
+      detail: '⚠️ 白川乡巴士必须预约指定座位，十一常满',
+      pay: { cash: 1, card: 0.5 }, xhsKeyword: '白川乡', gmap: 'Shirakawa-go+Ogimachi' },
+    { name: '城山天守阁展望台', lat: 36.2609, lng: 136.9021, type: 'spot', time: '10:30',
+      desc: '俯瞰合掌村全景的经典机位。步行上山约 20 分钟，也有摆渡巴士',
+      xhsKeyword: '白川乡 展望台', gmap: 'Shiroyama+Viewpoint+Shirakawa-go' },
+    { name: '金泽（住宿待定）', lat: 36.5780, lng: 136.6480, type: 'hotel', time: '15:30',
+      desc: '⚠️ 未预订。建议与 D1 同一家 —— 大箱可全程寄存，中途 4 晚轻装',
+      detail: '订前必须确认：接不接受「中断 4 晚」的行李寄存',
+      gmap: 'Kanazawa+Station' },
+    { name: '香林坊 / 片町（购物）', lat: 36.5626, lng: 136.6539, type: 'spot', time: '17:00',
+      desc: '金泽购物核心，大和百货 + 东急 Square。中华民族要逛的文创店主要在这一带',
+      pay: { cash: 1, card: 1 }, xhsKeyword: '金泽 香林坊 购物', gmap: 'Korinbo+Kanazawa' }
+  ]},
+
+  { id: 7, label: 'D7', date: '10/7 周三', title: '金泽深度游 + 购物休整', color: '#5856d6', locations: [
+    { name: '近江町市场', lat: 36.5719, lng: 136.6570, type: 'food', time: '09:30',
+      desc: '重点：海鲜丼 + 甜虾 + 生蚝。金泽的厨房，上午最新鲜',
+      budget: '¥2,500-4,000', detail: '很多摊位只收现金\n周三部分店休，去之前确认',
+      pay: { cash: 1, card: 0.5 }, xhsKeyword: '近江町市场 海鲜丼',
+      dianping: 'search', dianpingKeyword: '近江町市场', gmap: 'Omicho+Market+Kanazawa' },
+    { name: '金泽城公园', lat: 36.5652, lng: 136.6591, type: 'spot', time: '11:00',
+      desc: '与兼六园一路之隔，园区免费，石垣与复原橹是看点',
+      pay: { cash: 1 }, gmap: 'Kanazawa+Castle+Park' },
+    { name: '兼六园', lat: 36.5622, lng: 136.6626, type: 'spot', time: '12:00',
+      desc: '日本三名园之一。10 月上旬红叶刚起色，早枫已转',
+      budget: '¥320', pay: { cash: 1 }, xhsKeyword: '兼六园', gmap: 'Kenrokuen+Garden' },
+    { name: '21 世纪美术馆', lat: 36.5606, lng: 136.6580, type: 'spot', time: '14:00',
+      desc: '泳池装置那个。周一闭馆，10/7 周三没问题',
+      detail: '⚠️ 泳池作品要单独购票且常需预约\n馆内商店文创质量高',
+      budget: '¥500-1,200', pay: { cash: 1, card: 1 },
+      xhsKeyword: '金泽 21世纪美术馆', gmap: '21st+Century+Museum+Kanazawa' },
+    { name: '长町武家屋敷跡', lat: 36.5651, lng: 136.6497, type: 'spot', time: '15:30',
+      desc: '土墙武家宅邸街区，人少好拍，走过去就是香林坊',
+      gmap: 'Nagamachi+Samurai+District+Kanazawa' },
+    { name: '汤涌温泉（可选）', lat: 36.4776, lng: 136.7457, type: 'spot', time: '—',
+      desc: '金泽近郊温泉，巴士约 50 分钟。想省力可换成市内钱汤',
+      detail: '⚠️ 末班车早，去了要盯着回程时间\n最后一晚要收行李，取舍看体力',
+      budget: '¥500-1,500', pay: { cash: 1 },
+      xhsKeyword: '汤涌温泉', gmap: 'Yuwaku+Onsen+Kanazawa' }
+  ]},
+
+  { id: 8, label: 'D8', date: '10/8 周四', title: '金泽 → 小松 → 香港', color: '#8e8e93', locations: [
+    { name: '金泽站西口（机场巴士）', lat: 36.5773, lng: 136.6461, type: 'transport', time: '12:00',
+      desc: '西口发车，至小松机场约 45-60 分钟',
+      budget: '¥1,300', detail: '⚠️ 12:00 前必须上车，才能 13:20 到机场',
+      pay: { cash: 1, card: 0.5 }, gmap: 'Kanazawa+Station+West+Gate' },
+    { name: '小松机场 KMQ', lat: 36.3946, lng: 136.4066, type: 'transport', time: '13:20',
+      desc: '15:20 航班返港。建议至少提前 2 小时到',
+      gmap: 'Komatsu+Airport' }
+  ]}
+];
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  REPLACE THIS SECTION — Overview tab content                ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function overviewContent() {
+  return `
+<div class="hero"><h1>十一日本红叶行 🇯🇵</h1><p class="subtitle">北陆 · 立山黑部 · 上高地　8 天 7 晚　2026/10/1 – 10/8</p></div>
+<div class="info-grid">
+  <div class="info-card"><div class="label">住宿</div><div class="value">⚠️ 7 晚全部未定</div></div>
+  <div class="info-card"><div class="label">航班</div><div class="value">HKG↔KMQ<br>去 14:35 抵 · 回 15:20 飞</div></div>
+  <div class="info-card"><div class="label">交通卡</div><div class="value">IC 卡在北陆山区基本无用<br>备足现金</div></div>
+  <div class="info-card"><div class="label">同行</div><div class="value">共 4 人<br>Flow · AMY · 中华民族 +1</div></div>
+</div>
+<div class="section-head">行程概览</div>
+<div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
+<div class="section-head">🚨 未决事项</div>
+<div class="card"><div class="name">7 晚住宿一间都没订</div><div class="desc">十一 + 日本红叶旺季双撞。平汤温泉旅馆和松本最紧张，是全程最先会卖光的两晚。</div></div>
+<div class="card"><div class="name">大件行李动线</div><div class="desc">10/3 立山黑部、10/5 上高地都带不了大箱。方案 A：富山→松本宅急便 + 平汤→高山各托运一次。方案 B（推荐）：金泽 D1 与 D6-7 锁同一家酒店，大箱寄存 4 晚，中途全程轻装。</div></div>
+<div class="card"><div class="name">松本这一晚是不是有意加的</div><div class="desc">Flow 开头的路线摘要里没有松本，但 Day3 详细行程住松本。立山黑部从扇泽出来回不去富山，这晚绕不掉——群里确认一下。</div></div>
+<div class="card"><div class="name">衣服带什么（中华民族问的）</div><div class="desc">室堂 2450m 十月初接近 0°C 且可能落雪；平汤/高山早晚个位数；金泽/富山市区 15-22°C。结论：厚防风外套 + 抓绒 + 防滑徒步鞋，市区一件薄外套够。</div></div>
+<div class="section-head">⚠️ 安全与预订提醒</div>
+<div class="card"><div class="name">上高地有熊出没</div><div class="desc">结伴同行，带熊铃。徒步 5.6km / 2-2.5 小时，木栈道湿滑。</div></div>
+<div class="card"><div class="name">这些必须提前订</div><div class="desc">扇泽→松本特急巴士 · 松本→高山 JR · 高山→平汤/白川乡浓飞巴士（指定座位）· 白川乡→金泽巴士。十一期间常满。</div></div>
+<div class="card"><div class="name">天气敏感点（阴雨可直接砍）</div><div class="desc">雨晴海岸（看不到立山连峰就没意义）· 新穗高缆车（云雾天视野为零，先看山顶实时摄像头）· 大观峰红叶。</div></div>
+<div class="section-head">💴 支付提醒</div>
+<div class="card"><div class="name">山区现金为王</div><div class="desc">立山黑部沿线、平汤温泉旅馆、白川乡小店、近江町市场摊位多为现金。每人建议备 5-8 万日元现金。</div></div>
+<div class="card"><div class="name">刷卡稳的地方</div><div class="desc">金泽/富山/松本市区连锁店、美术馆、星巴克、大型百货。IC 卡（Suica/ICOCA）在北陆铁路和山区巴士基本用不了。</div></div>
+<div class="section-head">图例</div>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-red)"></div>餐厅</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-blue)"></div>景点</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-purple)"></div>酒吧</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--tint-orange)"></div>住宿</div>
+</div>`;
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  ENGINE — Do not modify below unless customizing behavior   ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const map = L.map('map', { center: [HOTEL.lat || 35.69, HOTEL.lng || 139.74], zoom: 12, zoomControl: false, attributionControl: true });
+L.control.zoom({ position: 'topright' }).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' }).addTo(map);
+
+/* ── Geolocation ── */
+const LocateControl = L.Control.extend({
+  options: { position: 'bottomright' },
+  onAdd() {
+    const btn = L.DomUtil.create('button', 'locate-btn');
+    btn.innerHTML = '📍';
+    btn.title = '我的位置';
+    L.DomEvent.disableClickPropagation(btn);
+    btn.addEventListener('click', () => {
+      btn.classList.add('active');
+      map.locate({ setView: true, maxZoom: 15 });
+    });
+    this._btn = btn;
+    return btn;
+  }
+});
+new LocateControl().addTo(map);
+let locMarker, locCircle;
+map.on('locationfound', e => {
+  const r = e.accuracy / 2;
+  if (locMarker) { locMarker.setLatLng(e.latlng); locCircle.setLatLng(e.latlng).setRadius(r); }
+  else {
+    locMarker = L.marker(e.latlng, {
+      icon: L.divIcon({ className:'', html:'<div style="width:14px;height:14px;border-radius:50%;background:#007aff;border:2.5px solid #fff;box-shadow:0 0 6px rgba(0,122,255,.5)"></div><div class="loc-pulse" style="position:absolute;top:0;left:0"></div>', iconSize:[14,14], iconAnchor:[7,7] }),
+      zIndexOffset: 2000
+    }).addTo(map);
+    locCircle = L.circle(e.latlng, { radius: r, color: '#007aff', fillColor: '#007aff', fillOpacity: .08, weight: 1 }).addTo(map);
+  }
+});
+map.on('locationerror', () => {});
+
+function icon(color, emoji) {
+  return L.divIcon({ className: '', html: `<div style="width:28px;height:28px;border-radius:50%;background:${color};border:2.5px solid #fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.18)">${emoji||''}</div>`, iconSize: [28,28], iconAnchor: [14,14], popupAnchor: [0,-16] });
+}
+
+if (HOTEL.lat) L.marker([HOTEL.lat, HOTEL.lng], { icon: icon('#ff9500','🏨'), zIndexOffset: 1000 }).addTo(map).bindPopup(`<b>${HOTEL.name}</b>`);
+
+let markers = [], polylines = [];
+const emojis = { food:'🍽️', spot:'📍', hotel:'🏨', transport:'🚃', drink:'🍺' };
+
+function clearMap() { markers.forEach(m=>map.removeLayer(m)); polylines.forEach(p=>map.removeLayer(p)); markers=[]; polylines=[]; }
+
+function showDay(idx) {
+  clearMap();
+  if (idx === 0) {
+    const pts = [];
+    DAYS.forEach(d => d.locations.forEach(l => { if(l.lat) pts.push([l.lat,l.lng]); }));
+    if(pts.length) map.fitBounds(pts, {padding:[30,30]});
+    DAYS.slice(1).forEach(d => {
+      d.locations.filter(l=>l.time!=='—').forEach(l => {
+        const m = L.circleMarker([l.lat,l.lng], { radius:4, fillColor:d.color, color:'#fff', weight:1.5, fillOpacity:.9 }).addTo(map).bindPopup(`<b>${l.name}</b><br><span style="color:#86868b">${d.label}</span>`);
+        markers.push(m);
+      });
+    });
+    return;
+  }
+  const day = DAYS.find(d=>d.id===idx);
+  if(!day) return;
+  const coords = [];
+  day.locations.forEach(l => {
+    if(!l.lat) return;
+    const m = L.marker([l.lat,l.lng], { icon: icon(day.color, emojis[l.type]||'📌') }).addTo(map);
+    const gmapQ = l.gmap||encodeURIComponent(l.name+' Tokyo');
+    m.bindPopup(`<b>${l.name}</b>${l.time!=='—'?'<br><span style="color:#86868b">'+l.time+'</span>':''}<br>${l.desc}${l.budget?'<br><span style="color:#ff9500">'+l.budget+'</span>':''}<br><a href="#" onclick="event.preventDefault();openAS('${l.name.replace(/'/g,"\\'")}',${l.lat},${l.lng},'${gmapQ}')">📍 导航</a>${l.xhs?' · <a href="'+l.xhs+'" target="_blank">📕 小红书</a>':''}`);
+    markers.push(m);
+    if(l.time!=='—') coords.push([l.lat,l.lng]);
+  });
+  if(coords.length>1) { const pl = L.polyline(coords, { color:day.color, weight:2.5, opacity:.5, dashArray:'6,5' }).addTo(map); polylines.push(pl); }
+  if(coords.length) map.fitBounds(coords, { padding:[40,40], maxZoom:14 });
+}
+
+// ══════════ RENDER ══════════
+function payChips(pay) {
+  if(!pay) return '';
+  let h = '<div class="pays">';
+  const m = { cash:'💴', card:'💳', suica:'Suica', paypay:'PayPay', alipay:'支付宝', wechat:'微信' };
+  for(const [k,label] of Object.entries(m)) {
+    if(pay[k]!==undefined) { const c = pay[k]===1?'ok':pay[k]===0.5?'idk':'no'; h += `<span class="pay ${c}">${label}</span>`; }
+  }
+  return h+'</div>';
+}
+
+// ── 运行环境检测：在第三方 App 的 WebView 里，自定义 scheme 基本会被拦截 ──
+const IN_APP_WEBVIEW = (() => {
+  const ua = (navigator.userAgent || '').toLowerCase();
+  return /micromessenger|xhs|xhsdiscover|discover\/|tiktok|aweme|weibo|qq\/|qqbrowser|alipayclient|dingtalk|lark|feishu|ucbrowser|baiduboxapp|toutiao|newsarticle/.test(ua);
+})();
+
+function xhsKeyword(loc) {
+  if(loc.xhsKeyword) return loc.xhsKeyword.trim();
+  return (loc.name||'').replace(/⭐.*$/g,'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
+}
+function xhsAppUrl(loc) { return `xhsdiscover://search/result?keyword=${encodeURIComponent(xhsKeyword(loc))}&target_search=notes&source=deeplink`; }
+function xhsWebUrl(loc) { return `https://www.xiaohongshu.com/search_result?keyword=${encodeURIComponent(xhsKeyword(loc))}&source=web_explore_feed`; }
+
+function dpKeyword(loc) {
+  if(loc.dianpingKeyword) return loc.dianpingKeyword.trim();
+  return (loc.name||'').replace(/⭐.*$/g,'').replace(/（.*?）/g,'').replace(/\(.*?\)/g,'').replace(/\s+/g,' ').trim();
+}
+function dpAppUrl(loc) { return `dianping://searchshoplist?keyword=${encodeURIComponent(dpKeyword(loc))}`; }
+function dpWebUrl(loc) { return `https://m.dianping.com/searchshop?keyword=${encodeURIComponent(dpKeyword(loc))}`; }
+
+window._extLocs = {};
+DAYS.forEach(d => d.locations.forEach(l => { window._extLocs[`${d.id}::${l.name}`] = l; }));
+window._xhsLocs = window._extLocs;
+
+function openExt(key, kind) {
+  const loc = window._extLocs[key]; if(!loc) return false;
+  if (IN_APP_WEBVIEW) {
+    window.location.href = kind==='dp' ? dpWebUrl(loc) : xhsWebUrl(loc);
+  } else {
+    window.location.href = kind==='dp' ? dpAppUrl(loc) : xhsAppUrl(loc);
+  }
+  return false;
+}
+function openXhs(key) { return openExt(key, 'xhs'); }
+function openDp(key)  { return openExt(key, 'dp'); }
+
+function locCard(loc, dayIdx) {
+  const dot = loc.type==='food'?'food':loc.type==='spot'?'spot':loc.type==='drink'?'drink':loc.type==='hotel'?'hotel':'transport';
+  const bdg = loc.type==='food'?'<span class="badge food">餐</span>':loc.type==='spot'?'<span class="badge spot">景</span>':loc.type==='drink'?'<span class="badge drink">饮</span>':'';
+  const uid = `d${dayIdx}-${loc.name.replace(/\W/g,'')}`;
+  const locKey = `${dayIdx}::${loc.name}`;
+  const gmapQ = loc.gmap||encodeURIComponent(loc.name+' Tokyo');
+  let lnk = `<button class="btn nav" onclick="openAS('${loc.name.replace(/'/g,"\\'")}',${loc.lat},${loc.lng},'${gmapQ}')">📍 导航</button>`;
+  if(loc.xhs||loc.xhsKeyword) {
+    const xhsHref = IN_APP_WEBVIEW ? xhsWebUrl(loc) : xhsAppUrl(loc);
+    const xhsLabel = IN_APP_WEBVIEW ? '📕 小红书' : '📕 小红书 App';
+    lnk += `<a href="${xhsHref}" onclick="return openXhs('${locKey.replace(/'/g,"\\'")}')" class="btn xhs">${xhsLabel}</a>`;
+  }
+  const dpEnabled = loc.dianping !== false &&
+    (loc.dianping || loc.dianpingKeyword || loc.type==='food' || loc.type==='drink');
+  if(dpEnabled) {
+    const dpHref = IN_APP_WEBVIEW ? dpWebUrl(loc) : dpAppUrl(loc);
+    const dpLabel = IN_APP_WEBVIEW ? '🍜 大众点评' : '🍜 大众点评 App';
+    lnk += `<a href="${dpHref}" onclick="return openDp('${locKey.replace(/'/g,"\\'")}')" class="btn dp">${dpLabel}</a>`;
+  }
+  if(loc.reserve) lnk += `<a href="${loc.reserve}" target="_blank" class="btn rsv">📅 预约</a>`;
+  return `<div class="tl-item"><div class="tl-dot ${dot}"></div><div class="card" onclick="if(!event.target.closest('.btn,.links'))toggle('${uid}')"><div class="time">${loc.time!=='—'?loc.time:'备选'}</div><div class="name">${bdg} ${loc.name}</div><div class="desc">${loc.desc}</div>${loc.budget?'<div class="budget">'+loc.budget+'</div>':''}${payChips(loc.pay)}<div class="links">${lnk}</div>${loc.detail?'<div class="details" id="'+uid+'">'+loc.detail.replace(/\n/g,'<br>')+'</div>':''}</div></div>`;
+}
+
+function renderDay(idx) {
+  const d = DAYS.find(x=>x.id===idx); if(!d) return '';
+  const main = d.locations.filter(l=>l.time!=='—');
+  const alt = d.locations.filter(l=>l.time==='—');
+  let h = `<div class="day-head"><h2>${d.title}</h2><p>${d.date}</p></div>`;
+  if(main.length) { h += '<div class="section-head">行程</div><div class="timeline">'; main.forEach(l => h += locCard(l, idx)); h += '</div>'; }
+  if(alt.length) { h += '<div class="section-head">备选</div><div class="timeline">'; alt.forEach(l => h += locCard(l, idx)); h += '</div>'; }
+  return h;
+}
+
+// ══════════ NAV ══════════
+let cur = 0;
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+
+DAYS.forEach(d => {
+  const btn = document.createElement('button');
+  btn.className = 'tab' + (d.id===0?' active':'');
+  btn.dataset.day = d.id;
+  btn.textContent = d.label;
+  tabsEl.appendChild(btn);
+});
+
+function go(idx) {
+  cur = idx;
+  tabsEl.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', +t.dataset.day===idx));
+  contentEl.innerHTML = idx===0 ? overviewContent() : renderDay(idx);
+  showDay(idx);
+  contentEl.scrollTo({top:0});
+  const tab = tabsEl.querySelector(`[data-day="${idx}"]`);
+  if(tab) tab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+}
+
+function toggle(id) { const el=document.getElementById(id); if(el) el.classList.toggle('closed'); }
+
+tabsEl.addEventListener('click', e => { const t=e.target.closest('.tab'); if(t) go(+t.dataset.day); });
+
+go(0);
+
+/* ── Action Sheet for Navigation ── */
+const asOverlay = document.createElement('div');
+asOverlay.className = 'as-overlay';
+asOverlay.innerHTML = `<div class="as-sheet">
+  <div class="as-group" id="as-opts"></div>
+  <div class="as-group"><button class="as-item as-cancel" onclick="closeAS()">取消</button></div>
+</div>`;
+document.body.appendChild(asOverlay);
+asOverlay.addEventListener('click', e => { if (e.target === asOverlay) closeAS(); });
+
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+function amapAppUrl(name, lat, lng) {
+  const scheme = IS_IOS ? 'iosamap' : 'androidamap';
+  return `${scheme}://viewMap?sourceApplication=trip&poiname=${encodeURIComponent(name)}&lat=${lat}&lon=${lng}&dev=0`;
+}
+function amapWebUrl(name, lat, lng) {
+  return `https://uri.amap.com/marker?position=${lng},${lat}&name=${encodeURIComponent(name)}&src=trip&coordinate=wgs84&callnative=1`;
+}
+function openAmap(name, lat, lng) {
+  if (IN_APP_WEBVIEW) { window.open(amapWebUrl(name, lat, lng)); return; }
+  window.location.href = amapAppUrl(name, lat, lng);
+}
+
+function openAS(name, lat, lng, gmap) {
+  const q = gmap || encodeURIComponent(name + ' Tokyo');
+  const encName = encodeURIComponent(name);
+  const safeName = name.replace(/'/g,"\\'");
+  // WebView 内 maps:// 通常被拦截，改用 https Apple Maps URL —— iOS 系统会自动拉起 Apple Maps
+  const appleUrl = IN_APP_WEBVIEW
+    ? `https://maps.apple.com/?q=${lat},${lng}&ll=${lat},${lng}&name=${encName}`
+    : `maps://maps.apple.com/?q=${lat},${lng}&name=${encName}`;
+  const googleUrl = `https://www.google.com/maps/search/?api=1&query=${q}`;
+  document.getElementById('as-opts').innerHTML =
+    `<button class="as-item" onclick="window.open('${appleUrl}');closeAS()">🍎 Apple Maps</button>` +
+    `<button class="as-item" onclick="window.open('${googleUrl}');closeAS()">🗺️ Google Maps</button>` +
+    `<button class="as-item" onclick="openAmap('${safeName}',${lat},${lng});closeAS()">🧭 高德地图 App</button>`;
+  asOverlay.classList.add('show');
+}
+function closeAS() { asOverlay.classList.remove('show'); }
+</script>
+</body>
+</html>
