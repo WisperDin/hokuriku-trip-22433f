@@ -394,7 +394,7 @@ const DAYS = [
       detail: '💡 金泽酒店便宜、选择多，「旺季也便宜」「当天定都行」\n候选（未核实）：mystays 城堡店(有澡堂) / Hyatt House(3分钟到站·带洗衣机) / Forza(近江町100m·房大) / 多美迎 / daiwa roynet / 凯悦',
       gmap: 'Kanazawa+Station' },
     { name: '香林坊 / 片町（购物）', lat: 36.5626, lng: 136.6539, type: 'spot', time: '17:00',
-      desc: '金泽购物核心，大和百货 + 东急 Square。中华民族要逛的文创店主要在这一带',
+      desc: '金泽购物核心，大和百货 + 东急 Square。小闫要逛的文创店主要在这一带',
       pay: { cash: 1, card: 1 }, xhsKeyword: '金泽 香林坊 购物', gmap: 'Korinbo+Kanazawa' }
   ]},
 
@@ -447,7 +447,7 @@ function overviewContent() {
   <div class="info-card"><div class="label">住宿</div><div class="value">✅ D1 已订<br>⚠️ 平汤·松本最先卖光</div></div>
   <div class="info-card"><div class="label">航班</div><div class="value">HKG↔KMQ<br>去 14:35 抵 · 回 15:20 飞</div></div>
   <div class="info-card"><div class="label">交通卡</div><div class="value">IC 卡在北陆山区基本无用<br>备足现金</div></div>
-  <div class="info-card"><div class="label">同行</div><div class="value">共 4 人<br>Flow · AMY · 中华民族 +1</div></div>
+  <div class="info-card"><div class="label">同行</div><div class="value">共 4 人<br>Flow · AMY · 小闫 +1</div></div>
 </div>
 <div class="section-head">行程概览</div>
 <div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
@@ -458,7 +458,7 @@ function overviewContent() {
 <div class="card"><div class="name">⚠️ 立山黑部：穿越还是往返</div><div class="desc">现行程是立山进/扇泽出的单向穿越，所以 D3 必须住松本。改成从立山站往返可省掉松本一晚 + 省掉行李托运约 ¥16,000，代价是原路折返更累、失去扇泽和松本城。</div></div>
 <div class="card"><div class="name">JR Pass 要不要买</div><div class="desc">「立山黑部·高山·松本区域 5 日券」含名古屋–松本–富山–高山的 JR 及立山黑部路线本身。但不含上高地段（往返自费 ¥7,620），且以名古屋为中心 —— 我们小松进出，金泽是否覆盖需自行核实。</div></div>
 <div class="card"><div class="name">松本这一晚是不是有意加的</div><div class="desc">Flow 开头的路线摘要里没有松本，但 Day3 详细行程住松本。立山黑部从扇泽出来回不去富山，这晚绕不掉——群里确认一下。</div></div>
-<div class="card"><div class="name">衣服带什么（中华民族问的）</div><div class="desc">室堂网友 10/5 实测 9-13°C，可能落雪 —— 全身防水比保暖更关键；平汤/高山早晚个位数；金泽/富山市区 15-22°C。鞋：上高地基本平路，普通运动鞋够；室堂建议防滑。</div></div>
+<div class="card"><div class="name">衣服带什么（小闫问的）</div><div class="desc">室堂网友 10/5 实测 9-13°C，可能落雪 —— 全身防水比保暖更关键；平汤/高山早晚个位数；金泽/富山市区 15-22°C。鞋：上高地基本平路，普通运动鞋够；室堂建议防滑。</div></div>
 <div class="section-head">⚠️ 安全与预订提醒</div>
 <div class="card"><div class="name">上高地有熊出没</div><div class="desc">结伴同行，带熊铃。徒步 5.6km / 2-2.5 小时，木栈道湿滑。</div></div>
 <div class="card"><div class="name">立山黑部天气：晴雨体验差 10 倍</div><div class="desc">网友通行做法：松本和富山订可免费取消的房，提前 3 天看预报，天气好再冲。实时监控搜「立山町室堂」摄像头。</div></div>
