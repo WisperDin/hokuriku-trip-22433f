@@ -134,7 +134,15 @@
 | daiwa roynet 金泽站旁 | 又新又大 |
 | 御宿野乃 | 早餐丰盛，有温泉 |
 
-**平汤温泉**：深山樱庵 / mozumo / 湯の平館 / 平汤馆 Hirayukan / 风雪旅馆（带室内外私汤）
+**平汤温泉（详见 LODGING.md）** ⚠️ 温泉旅馆型住宿，主流走 Jalan 不走 Booking/Airbnb；Booking.com 实测「78% 已不可订」
+| 名称 | 价格/评分 | 被提到的点 |
+|---|---|---|
+| mozumo | 1020赞 | 私汤半露天面松树，站步行5分钟，房间能睡4人 |
+| 平汤馆 Hirayukan | — | 被实测验证过行程可行性，最便宜和室也带2个露天温泉池 |
+| 深山樱庵 | 91赞 | 「没有短板」，Jalan订，价格未直接可比 |
+| **英太郎日式旅馆** | 约¥2,673/晚一泊二食，9.5★(149条) | Booking.com 上平汤本地评分最高、价格最友好的选项 |
+| ~~Miyama Ouan~~ | 约¥13,900（顶配房） | ❌ 不是深山樱庵，只是名字撞了「深山」，价格远超预期 |
+| 湯の平館 / 风雪旅馆 | — | 仅搜到标题，待查 |
 
 **富山（详见 LODGING.md，含 Booking.com 实时比价）**
 | 名称 | 类型 | 价格 | 被提到的点 |
@@ -149,14 +157,24 @@
 **松本（详见 LODGING.md，含 Booking.com 实时比价）** ⚠️ **十一档期最紧张，实测「84% 住宿已不可订」**
 | 名称 | 类型 | 价格 | 被提到的点 |
 |---|---|---|---|
-| **[御宿野乃松本 Onyado Nono](https://www.booking.com/hotel/jp/tian-ran-wen-quan-aduminotang-yu-su-ye-nai-song-ben.zh-cn.html)（新首选）** | 酒店 | 约¥4,660/晚 | 站步行 6 分钟，9.0★(2879条)，真实评价证实行李灵活处理 |
+| **[御宿野乃松本 Onyado Nono](https://www.booking.com/hotel/jp/tian-ran-wen-quan-aduminotang-yu-su-ye-nai-song-ben.zh-cn.html)（新首选）** | 酒店 | Booking约¥4,660，**Trip.com ¥3,714**（9.9大促） | 站步行 6 分钟，9.0★(2879条)，真实评价证实行李灵活处理，两平台比价 |
 | [Guest house RouTe5](https://www.airbnb.com.sg/rooms/1520137273788759458) | Airbnb | ¥2,270/晚 | 站步行 10 分钟，房源写明可寄存行李，⚠️ 需私信房东确认能否代收提前寄到的快递 |
-| Hotel Welcome Matsumoto | 酒店 | 约¥2,400/晚（最便宜的正规酒店） | 站步行 300m，无行李相关具体证据，订前需自问 |
+| Hotel Welcome Matsumoto | 酒店 | 约¥2,400/晚（最便宜的正规酒店） | 站步行 300m，无行李相关具体证据；⚠️ Trip.com 显示无房但 Booking.com 有，平台库存不同步 |
 | 松本翔峰 Hotel Shoho | 酒店 | — | 半山腰+接驳车方案，接驳车帮忙寄存行李到站前姐妹酒店，需核实接驳车时刻 |
 | ~~Shanti holiday lodge~~ | Airbnb | ¥1,215/晚 | ❌ 房源原文写死不能提前寄存行李，且合租通铺 |
 | ~~乡下里山民宿~~ | Airbnb | ¥1,470/晚 | ❌ 距松本城开车 5 分钟，彻底不满足站步行圈 |
 | ~~[Max 8] 传统日式屋~~ | Airbnb | ¥1,780/晚 | ❌ 步行 50 分钟/开车 12 分钟，评分高但距离硬伤 |
 | Dormy Inn 松本 | 酒店 | — | ⚠️ 已实测 10/3-10/4 满房 |
+
+**高山（详见 LODGING.md，含 Airbnb/Booking/Trip.com 三方比价）**
+| 名称 | 类型 | 价格 | 被提到的点 |
+|---|---|---|---|
+| **[Tabino Hotel Base Takayama Station](https://www.booking.com/hotel/jp/tabinohoterubasegao-shan-yi-qian.zh-cn.html)（新首选）** | 酒店 | Booking约¥1,626，**Trip.com ¥1,294**（9.9大促） | 站步行 50 米，官方行李寄存，法国房客真实评价证实入住前可代收行李 |
+| SHINGU FLEUR 老城整栋 | Airbnb | ¥1,980/晚 | 房源写明「Luggage storage service available」+免费站接送，3层楼独栋最多8人 |
+| Fav Lux Hida Takayama | 酒店 | 约¥1,733/晚 | 站附近，9.2★(469条评价基数大) |
+| Relax Hotel Takayama Station | 酒店 | 约¥1,993/晚，含早 | 9.5★(117条)，适合带小孩 |
+| 高山 Associa Hotel | 酒店 | — | shuttle bus接驳，温泉好，退房12:00晚 |
+| ~~「羊毛小手段」精品设计酒店~~ | — | — | ❌ 小红书未点名具体品牌，无法核对预订，暂排除 |
 
 ### 订房前必问（日文可直接抄）
 ```
