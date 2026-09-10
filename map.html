@@ -329,11 +329,15 @@ const DAYS = [
       budget: '¥700', xhsKeyword: '松本城', gmap: 'Matsumoto+Castle' }
   ]},
 
-  { id: 4, label: 'D4', date: '10/4 周日', title: '松本 → 新穗高缆车 → 平汤温泉', color: '#af52de', locations: [
+  { id: 4, label: 'D4', date: '10/4 周日', title: '松本 → 高山 → 新穗高缆车 → 平汤温泉', color: '#af52de', locations: [
     { name: '高山站（换乘）', lat: 36.1440, lng: 137.2517, type: 'transport', time: '11:00',
       desc: '松本乘 JR 至高山，转浓飞巴士至平汤温泉约 1.5 小时',
       detail: '浓飞巴士中心就在站旁\n⚠️ 高速巴士十一必须预订',
       pay: { cash: 1, card: 0.5 }, gmap: 'Takayama+Station' },
+    { name: '平汤温泉（去程换乘，非落脚点）', lat: 36.1740, lng: 137.5540, type: 'transport', time: '12:30',
+      desc: '高山→新穗高的巴士线路经过平汤，这里换乘 25 分钟班车继续去新穗高',
+      detail: '⚠️ 这是去程路过，不是今晚住的地方——玩完缆车原路退回，晚上才在平汤落脚\n地理关系：高山站→(1.5h)→平汤→(25min)→新穗高，三点一线，平汤是必经中转站',
+      gmap: 'Hirayu+Onsen' },
     { name: '新穗高缆车', lat: 36.2447, lng: 137.5637, type: 'spot', time: '14:00',
       desc: '日本唯一双层缆车，直上 2156m 西穗高口俯瞰北阿尔卑斯',
       budget: '¥3,800 往返', detail: '平汤温泉乘巴士约 25 分钟\n⚠️ 车票+缆车套票不能提前买，当天在高山巴士站买\n⚠️ 云雾天视野为零，出发前看山顶实时摄像头再决定\n⚠️ 风大雪大时第二段缆车可能停运，留意窗口通知\n🍜 山上有小吃店可解决午餐',
