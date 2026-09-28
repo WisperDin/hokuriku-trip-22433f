@@ -350,62 +350,70 @@ const DAYS = [
       gmap: 'Hirayu+Onsen+Bus+Terminal' }
   ]},
 
-  { id: 5, label: 'D5', date: '10/5 周一', title: '平汤 → 上高地 → 高山（方案一）／住平汤（方案二）', color: '#34c759', locations: [
-    { name: '深山樱庵（泡汤、11:00 退房）', lat: 36.1944, lng: 137.5529, type: 'hotel', time: '09:00',
-      desc: '两个方案都一样：9 点起床、泡汤，11:00 退房，大箱子先请酒店寄存',
-      detail: '⚠️ 订房时问清：能否寄存行李到傍晚约 17:30\n方案一：再问傍晚能否用接驳车把行李送到巴士站\n方案二：拖着箱子走两三分钟到平汤王子酒店（直线约 160 米）\n两个方案的对比见 PLAN.md 待决事项 D-F',
+  { id: 5, label: 'D5', date: '10/5 周一', title: '平汤（自然醒）→ 上高地 → 平汤王子酒店', color: '#34c759', locations: [
+    { name: '深山樱庵（自然醒、泡汤）', lat: 36.1944, lng: 137.5529, type: 'hotel', time: '09:00',
+      desc: '睡到自然醒，多泡一会，吃完早饭，11:00 退房',
       gmap: 'Miyama+Ouan+Hirayu' },
-    { name: '平汤巴士总站（去上高地）', lat: 36.1906, lng: 137.5518, type: 'transport', time: '13:00',
-      desc: '平汤→上高地每小时 00、30 分发车，约 30 分钟，单程 1,500 日元，不用预约',
-      detail: '方案二时间更宽裕，可以 11:30-12:00 就出发\n午饭：在平汤随便吃点，或到上高地河童桥一带再吃',
+    { name: '平汤王子酒店（先寄存行李）', lat: 36.1931, lng: 137.5537, type: 'hotel', time: '11:00',
+      desc: '离深山樱庵直线约 160 米，拖着箱子走两三分钟，先寄存行李',
+      detail: '⚠️ 提前电话确认上午能先放行李：0578-89-2323',
+      gmap: 'Hirayu+Prince+Hotel' },
+    { name: '平汤巴士总站（去上高地）', lat: 36.1906, lng: 137.5518, type: 'transport', time: '12:30',
+      desc: '平汤→上高地每小时 00、30 分发车，约 30 分钟，单程 1,500 日元（往返 2,800），不用预约',
+      detail: '午饭：在平汤随便吃点，或到上高地河童桥一带再吃\n想多玩就坐早一点的车',
       pay: { cash: 1 }, gmap: 'Hirayu+Bus+Terminal' },
-    { name: '上高地巴士总站', lat: 36.2500, lng: 137.6317, type: 'transport', time: '13:30',
-      desc: '徒步起终点。⚠️ 回程 17:00 是底线，末班 17:30 只当备用',
+    { name: '上高地巴士总站', lat: 36.2500, lng: 137.6317, type: 'transport', time: '13:00',
+      desc: '徒步起终点。回程末班 17:30，最好 16:30-17:00 就坐车回去',
       detail: '上高地→平汤 15:30 之后每半小时一班\n⚠️ 上高地全年禁止私家车\n全程没有垃圾桶，带塑料袋',
       pay: { cash: 1 }, gmap: 'Kamikochi+Bus+Terminal' },
-    { name: '河童桥', lat: 36.2517, lng: 137.6333, type: 'spot', time: '13:45',
+    { name: '河童桥', lat: 36.2517, lng: 137.6333, type: 'spot', time: '13:15',
       desc: '📌 精华版（约 1.5 小时）：只逛河童桥一带，看穗高连峰，然后回巴士总站',
       detail: '📌 TODO：精华版还是完整版，当天看精力决定',
       xhsKeyword: '上高地 河童桥', gmap: 'Kappa+Bridge+Kamikochi' },
-    { name: '穗高神社奥宫 & 明神池（完整版）', lat: 36.2604, lng: 137.6555, type: 'spot', time: '15:00',
+    { name: '穗高神社奥宫 & 明神池（完整版）', lat: 36.2604, lng: 137.6555, type: 'spot', time: '14:30',
       desc: '📌 完整版（约 3-4 小时）：河童桥 → 明神池 → 走另一侧回河童桥',
       budget: '¥500', detail: '小红书实测：建议买票进神社，很有感觉\n时间够再加大正池（从大正池走到河童桥约 1 小时）\n⚠️ 会遇到猴子，别投喂；熊出没季节结伴走',
       pay: { cash: 1 }, xhsKeyword: '明神池 上高地', gmap: 'Myojin+Pond+Hotaka+Shrine' },
-    { name: '平汤巴士总站（回程取行李）', lat: 36.1906, lng: 137.5518, type: 'transport', time: '17:30',
-      desc: '方案一：取行李，17:30 坐车去高山（末班 18:28 当备用）；方案二：走回平汤王子酒店',
-      detail: '平汤→高山 16:30 / 17:30 / 末班 18:28，约 50 分钟，910 日元，不用预约\n⚠️ 错过末班只能打车：约 35km、47 分钟，NAVITIME 估算约 16,000 日元（按东京费率）；要从高山叫车，等近 1 小时；4 个大箱要大型车或两辆\n鳩タクシー 0577-32-0246 / 濃飛タクシー 0578-82-1111\n从松本来的特急巴士 19:13 经过平汤，但在平汤只能下车不能上车',
+    { name: '平汤巴士总站（回程）', lat: 36.1906, lng: 137.5518, type: 'transport', time: '17:30',
+      desc: '回到平汤，步行约 8 分钟回王子酒店，或电话约接送',
       pay: { cash: 1 }, gmap: 'Hirayu+Bus+Terminal' },
-    { name: '平汤王子酒店（方案二住宿）', lat: 36.1931, lng: 137.5537, type: 'hotel', time: '—',
-      desc: '⚠️ 未预订。离深山樱庵直线约 160 米，离巴士站约 330 米（官方步行约 8 分钟），可电话约接送',
-      budget: '评价里的例子：大人 6,450 日元，需电话确认',
-      detail: '素泊为主，有贷切温泉，步行范围内有餐馆和咖啡店\n电话 0578-89-2323\n备选：山里草冈（福地温泉，用户查到人均约 ¥600，到平汤巴士约 20 分钟）',
-      gmap: 'Hirayu+Prince+Hotel' },
-    { name: '高山 萱の宿 Kaya（方案一住宿，第 1 晚）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '19:20',
-      desc: '⚠️ 未预订。老街步行 2 分钟，自助入住 15:00-21:00',
-      budget: '¥2,389 CNY/2 晚，人均约 ¥299/晚',
-      detail: '从浓飞巴士中心步行约 20 分钟，晚上带箱子建议打车\n到高山已 19 点后，老街餐厅很多八九点关门，晚饭提前想好\n⚠️ 坐标为附近的樱山八幡宫一带，精确位置以房源为准',
-      reserve: 'https://www.airbnb.cn/rooms/1656874356345626855', gmap: 'Sakurayama+Hachimangu+Takayama' }
+    { name: '平汤王子酒店（✅ D5 住宿）', lat: 36.1931, lng: 137.5537, type: 'hotel', time: '17:45',
+      desc: '入住，再泡一晚温泉。以素泊为主，有贷切温泉',
+      budget: '评价里的例子：大人 6,450 日元，以电话确认为准',
+      detail: '⚠️ 晚饭要提前问清：之前查到"平汤晚上几乎没有营业的餐馆"，另一处资料又说附近有餐馆，说法对不上；问酒店有没有晚饭套餐\n电话 0578-89-2323',
+      gmap: 'Hirayu+Prince+Hotel' }
   ]},
 
-  { id: 6, label: 'D6', date: '10/6 周二', title: '高山市区（方案一全天／方案二下午）', color: '#ff2d55', locations: [
-    { name: '宫川朝市', lat: 36.1447, lng: 137.2579, type: 'food', time: '10:00',
-      desc: '只开上午。方案一 D6 上午逛；方案二下午才到高山，放到 D7 早上',
-      pay: { cash: 1 }, xhsKeyword: '宫川朝市', gmap: 'Miyagawa+Morning+Market' },
-    { name: '三町古街', lat: 36.1418, lng: 137.2610, type: 'spot', time: '11:00',
+  { id: 6, label: 'D6', date: '10/6 周二', title: '平汤 → 高山（行李寄存在民宿，逛高山）', color: '#ff2d55', locations: [
+    { name: '平汤王子酒店（自然醒、退房）', lat: 36.1931, lng: 137.5537, type: 'hotel', time: '09:00',
+      desc: '睡到自然醒，泡汤，退房（退房时间以酒店为准）',
+      gmap: 'Hirayu+Prince+Hotel' },
+    { name: '平汤巴士总站（去高山）', lat: 36.1906, lng: 137.5518, type: 'transport', time: '11:30',
+      desc: '平汤→高山约 50 分钟，910 日元，不用预约',
+      pay: { cash: 1 }, gmap: 'Hirayu+Bus+Terminal' },
+    { name: '高山浓飞巴士中心', lat: 36.1412, lng: 137.2515, type: 'transport', time: '12:20',
+      desc: '到高山。去民宿步行约 20 分钟，带箱子建议打车',
+      detail: '⚠️ 坐标为高山站旁的近似位置',
+      gmap: 'Takayama+Nohi+Bus+Center' },
+    { name: '萱の宿 Kaya（先寄存行李）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '12:45',
+      desc: '⚠️ 未订。入住 15:00-21:00，能否提前把行李放进门口和室要先问房东',
+      budget: '10/6 单晚 ¥1,194 CNY，人均约 ¥299',
+      detail: '房东不同意的话：行李先放高山站或巴士中心的投币柜（能否放下大箱子没核实）\n有洗衣机，晚上可以洗一轮衣服\n⚠️ 坐标为附近的樱山八幡宫一带，精确位置以房源为准',
+      reserve: 'https://www.airbnb.cn/rooms/1656874356345626855', gmap: 'Sakurayama+Hachimangu+Takayama' },
+    { name: '三町古街', lat: 36.1418, lng: 137.2610, type: 'spot', time: '14:00',
       desc: '江户町屋老街。飞驒牛：网友实测「哪家有位不用预约就直接去，品质都很好完全不会踩雷」',
       detail: '店铺多在 17:00 关',
       pay: { cash: 1, card: 0.5 }, xhsKeyword: '高山 三町 古街',
       dianping: 'search', dianpingKeyword: '高山 飞驒牛', gmap: 'Sanmachi+Suji+Takayama' },
-    { name: '樱山八幡宫', lat: 36.1483, lng: 137.2605, type: 'spot', time: '14:00',
-      desc: '离萱の宿 Kaya 步行约 2 分钟',
-      gmap: 'Sakurayama+Hachimangu+Takayama' },
-    { name: '高山住宿（方案一 Kaya 第 2 晚／方案二单晚）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '—',
-      desc: '方案一连住不用搬；方案二 D6 下午从平汤过来（约 50 分钟），单晚要重查房',
-      detail: 'Kaya 有洗衣机，可以洗一轮衣服\n方案二：D6 上午在平汤王子酒店睡到自然醒、泡汤、吃完午饭再出发',
-      reserve: 'https://www.airbnb.cn/rooms/1656874356345626855', gmap: 'Sakurayama+Hachimangu+Takayama' }
+    { name: '樱山八幡宫', lat: 36.1483, lng: 137.2605, type: 'spot', time: '16:00',
+      desc: '离萱の宿 Kaya 步行约 2 分钟，逛完回民宿入住',
+      gmap: 'Sakurayama+Hachimangu+Takayama' }
   ]},
 
   { id: 7, label: 'D7', date: '10/7 周三', title: '高山 → 白川乡 → 金泽', color: '#5856d6', locations: [
+    { name: '宫川朝市', lat: 36.1447, lng: 137.2579, type: 'food', time: '08:30',
+      desc: '只开上午，离 Kaya 步行 2 分钟，逛完回去退房（10:00 前）',
+      pay: { cash: 1 }, xhsKeyword: '宫川朝市', gmap: 'Miyagawa+Morning+Market' },
     { name: '高山浓飞巴士中心', lat: 36.1412, lng: 137.2515, type: 'transport', time: '10:30',
       desc: '⚠️ 高山→白川乡、白川乡→金泽两段巴士都要提前 1 个月预约',
       detail: '10 点前退房，打车过来\n⚠️ 坐标为高山站旁的近似位置',
@@ -457,7 +465,7 @@ function overviewContent() {
 <div class="section-head">行程概览</div>
 <div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
 <div class="section-head">🚨 未决事项</div>
-<div class="card"><div class="name">⚠️ D5-D6 两个方案待定</div><div class="desc">方案一：D5 下午进上高地，傍晚回平汤取行李，赶 18:28 前的巴士去高山，高山萱の宿 Kaya 连住 2 晚，D6 全天逛高山（最便宜，但末班车卡得紧）。方案二：D5 住平汤王子酒店（离深山樱庵约 160 米），D6 再去高山住 1 晚（没有末班车压力，高山只剩半天）。详见 PLAN.md 待决事项 D-F。</div></div>
+<div class="card"><div class="name">✅ D5-D6 已定</div><div class="desc">D5 在深山樱庵自然醒、多泡一会，退房后把行李拖到约 160 米外的平汤王子酒店，下午去上高地，晚上回王子酒店。D6 去高山，行李先寄存在民宿（萱の宿 Kaya，能否提前放行李要问房东），逛高山。⚠️ 王子酒店以素泊为主，D5 晚饭要提前问清。</div></div>
 <div class="card"><div class="name">6 晚住宿未订（D1 已订）</div><div class="desc">十一 + 日本红叶旺季双撞。平汤温泉旅馆和松本最紧张，是全程最先会卖光的两晚。</div></div>
 <div class="card"><div class="name">大件行李动线（4 人 = 4 个大箱）· 只需托运 1 次</div><div class="desc">10/3 立山黑部带不了大箱：富山电铁站交寄、信浓大町取件，¥4,000/件，只收现金，4 件 ¥16,000。原来的「平汤→高山」托运已取消：D5 大箱先寄存在平汤旅馆，从上高地回来后跟人一起坐巴士走。</div></div>
 <div class="card"><div class="name">✅ 白川乡：保留，改到 D7 高山→金泽的路上</div><div class="desc">已核对小红书原图更正：「十一只剩泥地」不成立，稻田金黄未收割反而加分。真正坐实的风险是熊——10/8 笔记拍到景区实际挂牌封路。红叶未到、雪未下属实但不算减分。换掉与否更多是行程取舍，不是「难看」。</div></div>
