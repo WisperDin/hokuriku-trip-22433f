@@ -321,7 +321,7 @@ const DAYS = [
     { name: '松本河畔古民宅（D3 住宿）', lat: 36.2381, lng: 137.9670, type: 'hotel', time: '17:55',
       desc: '✅ 已订。离站远，从松本站打车约 12 分钟；自助入住 16:00-20:00',
       budget: '约 ¥1,608 CNY/晚',
-      detail: '96㎡ 整栋古民宅，3 卧 1 卫，有洗衣机+烘干机，4.96★(27)\n⚠️ 入住前在线登记所有人护照信息，否则拿不到钥匙密码\n⚠️ 住宅区晚上没有路灯；不可退款\nD4 早上 10:20-10:30 打车去松本巴士总站\n⚠️ 坐标为松本站，精确位置以房东地址为准',
+      detail: '96㎡ 整栋古民宅，3 卧 1 卫，有洗衣机+烘干机，4.96★(27)\n⚠️ 入住前在线登记所有人护照信息，否则拿不到钥匙密码\n⚠️ 住宅区晚上没有路灯；不可退款\n⚠️ 10:00 前退房，退房就打车去松本巴士总站（约 10:15 到）\n⚠️ 坐标为松本站，精确位置以房东地址为准',
       reserve: 'https://www.airbnb.cn/rooms/1650318719916693903',
       gmap: 'Matsumoto+Station' },
     { name: '松本城（如有余力）', lat: 36.2387, lng: 137.9690, type: 'spot', time: '—',
@@ -456,6 +456,7 @@ function overviewContent() {
 <div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
 <div class="section-head">🚨 未决事项</div>
 <div class="card"><div class="name">✅ D5-D6 已定</div><div class="desc">D5 在深山樱庵自然醒、泡汤，退房后行李寄存在酒店，下午去上高地（精华版约 1.5 小时 / 完整版约 3-4 小时，当天定）；16:30 回平汤取行李，17:30 坐车去高山（末班 18:28），高山 Rin no Yado 连住 2 晚（✅ 已订）。D6 全天逛高山。⚠️ 末班车卡得紧，错过只能打车，叫车电话见 D5。</div></div>
+<div class="card"><div class="name">⏰ 入住时间卡点</div><div class="desc">D2 富山きまち亭入住截止 20:00，15:00 左右先去入住放行李；D3 松本 16:00-20:00，约 17:55 到，要先在线登记护照；D4 深山樱庵最晚入住时间要在订房时问清，约 18:00 才到；D5 高山约 19:00 才到，要先跟房东确认晚到怎么进门；D7 金泽 19:30 左右到，只订能晚到入住的。详见 PLAN「每晚入住 / 退房时间对照」。</div></div>
 <div class="card"><div class="name">还剩 2 晚住宿未订</div><div class="desc">已订：D1 金泽、D2 富山、D3 松本、D5-D6 高山。还没订：D4 平汤深山樱庵（最紧张，问清 D5 能否寄存行李到傍晚）、D7 金泽。</div></div>
 <div class="card"><div class="name">大件行李动线（4 人 = 4 个大箱）· 只需托运 1 次</div><div class="desc">10/3 立山黑部带不了大箱：富山电铁站交寄、信浓大町取件，¥4,000/件，只收现金，4 件 ¥16,000。原来的「平汤→高山」托运已取消：D5 大箱先寄存在平汤旅馆，从上高地回来后跟人一起坐巴士走。</div></div>
 <div class="card"><div class="name">✅ 白川乡：保留，改到 D7 高山→金泽的路上</div><div class="desc">已核对小红书原图更正：「十一只剩泥地」不成立，稻田金黄未收割反而加分。真正坐实的风险是熊——10/8 笔记拍到景区实际挂牌封路。红叶未到、雪未下属实但不算减分。换掉与否更多是行程取舍，不是「难看」。</div></div>
