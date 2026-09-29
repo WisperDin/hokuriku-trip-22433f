@@ -379,16 +379,16 @@ const DAYS = [
       desc: '到高山，打车去民宿（步行约 20 分钟，晚上拖箱子不划算）',
       detail: '⚠️ 坐标为高山站旁的近似位置',
       gmap: 'Takayama+Nohi+Bus+Center' },
-    { name: '萱の宿 Kaya（D5-D6 住宿，连住 2 晚）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '18:40',
-      desc: '⚠️ 未订。老街步行 2 分钟，自助入住 15:00-21:00',
-      budget: '¥2,389 CNY/2 晚，人均约 ¥299/晚',
-      detail: '9/29 查询 10/5-10/7 两晚有房\n到高山已 18:30 以后，老街餐厅很多八九点关门，晚饭提前想好\n⚠️ 坐标为附近的樱山八幡宫一带，精确位置以房源为准',
-      reserve: 'https://www.airbnb.cn/rooms/1656874356345626855', gmap: 'Sakurayama+Hachimangu+Takayama' }
+    { name: 'Rin no Yado（D5-D6 住宿，连住 2 晚）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '18:40',
+      desc: '✅ 已订。169㎡ 整栋町屋，16:00 后入住，有洗衣机+烘干机',
+      budget: '¥2,658 CNY/2 晚，人均约 ¥332/晚',
+      detail: '⚠️ 入住前交护照复印件 + 房客信息表，确认晚到怎么进门\n站步行约 22 分钟，带行李打车；楼梯陡\n到高山已 18:30 以后，老街餐厅很多八九点关门，晚饭提前想好\n⚠️ 坐标为附近的樱山八幡宫一带，精确位置以房源为准',
+      reserve: 'https://www.airbnb.cn/rooms/1775948152679489169', gmap: 'Sakurayama+Hachimangu+Takayama' }
   ]},
 
   { id: 6, label: 'D6', date: '10/6 周二', title: '高山全天逛市区', color: '#ff2d55', locations: [
     { name: '宫川朝市', lat: 36.1447, lng: 137.2579, type: 'food', time: '09:30',
-      desc: '只开上午，离 Kaya 步行 2 分钟',
+      desc: '只开上午，离住处不远',
       pay: { cash: 1 }, xhsKeyword: '宫川朝市', gmap: 'Miyagawa+Morning+Market' },
     { name: '三町古街', lat: 36.1418, lng: 137.2610, type: 'spot', time: '11:00',
       desc: '江户町屋老街。飞驒牛：网友实测「哪家有位不用预约就直接去，品质都很好完全不会踩雷」',
@@ -396,11 +396,11 @@ const DAYS = [
       pay: { cash: 1, card: 0.5 }, xhsKeyword: '高山 三町 古街',
       dianping: 'search', dianpingKeyword: '高山 飞驒牛', gmap: 'Sanmachi+Suji+Takayama' },
     { name: '樱山八幡宫', lat: 36.1483, lng: 137.2605, type: 'spot', time: '15:00',
-      desc: '离萱の宿 Kaya 步行约 2 分钟',
+      desc: '就在住处附近',
       gmap: 'Sakurayama+Hachimangu+Takayama' },
-    { name: '萱の宿 Kaya（连住第 2 晚）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '—',
-      desc: '不用搬行李。有洗衣机，可以洗一轮衣服',
-      reserve: 'https://www.airbnb.cn/rooms/1656874356345626855', gmap: 'Sakurayama+Hachimangu+Takayama' }
+    { name: 'Rin no Yado（连住第 2 晚）', lat: 36.1475, lng: 137.2600, type: 'hotel', time: '—',
+      desc: '不用搬行李。有洗衣机+烘干机，洗一轮衣服当晚就能干',
+      reserve: 'https://www.airbnb.cn/rooms/1775948152679489169', gmap: 'Sakurayama+Hachimangu+Takayama' }
   ]},
 
   { id: 7, label: 'D7', date: '10/7 周三', title: '高山 → 白川乡 → 金泽', color: '#5856d6', locations: [
@@ -455,7 +455,7 @@ function overviewContent() {
 <div class="section-head">行程概览</div>
 <div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
 <div class="section-head">🚨 未决事项</div>
-<div class="card"><div class="name">✅ D5-D6 已定</div><div class="desc">D5 在深山樱庵自然醒、泡汤，退房后行李寄存在酒店，下午去上高地（精华版约 1.5 小时 / 完整版约 3-4 小时，当天定）；16:30 回平汤取行李，17:30 坐车去高山（末班 18:28），高山萱の宿 Kaya 连住 2 晚。D6 全天逛高山。⚠️ 末班车卡得紧，错过只能打车，叫车电话见 D5。</div></div>
+<div class="card"><div class="name">✅ D5-D6 已定</div><div class="desc">D5 在深山樱庵自然醒、泡汤，退房后行李寄存在酒店，下午去上高地（精华版约 1.5 小时 / 完整版约 3-4 小时，当天定）；16:30 回平汤取行李，17:30 坐车去高山（末班 18:28），高山 Rin no Yado 连住 2 晚（✅ 已订）。D6 全天逛高山。⚠️ 末班车卡得紧，错过只能打车，叫车电话见 D5。</div></div>
 <div class="card"><div class="name">6 晚住宿未订（D1 已订）</div><div class="desc">十一 + 日本红叶旺季双撞。平汤温泉旅馆和松本最紧张，是全程最先会卖光的两晚。</div></div>
 <div class="card"><div class="name">大件行李动线（4 人 = 4 个大箱）· 只需托运 1 次</div><div class="desc">10/3 立山黑部带不了大箱：富山电铁站交寄、信浓大町取件，¥4,000/件，只收现金，4 件 ¥16,000。原来的「平汤→高山」托运已取消：D5 大箱先寄存在平汤旅馆，从上高地回来后跟人一起坐巴士走。</div></div>
 <div class="card"><div class="name">✅ 白川乡：保留，改到 D7 高山→金泽的路上</div><div class="desc">已核对小红书原图更正：「十一只剩泥地」不成立，稻田金黄未收割反而加分。真正坐实的风险是熊——10/8 笔记拍到景区实际挂牌封路。红叶未到、雪未下属实但不算减分。换掉与否更多是行程取舍，不是「难看」。</div></div>
