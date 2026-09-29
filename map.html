@@ -281,15 +281,15 @@ const DAYS = [
       detail: '从玻璃美术馆步行约 3 分钟\n💡 16:00-16:30 落日会把立山连峰染成粉色\n傍晚点灯后运河夜景也不错',
       pay: { cash: 1, card: 1, suica: 1 }, xhsKeyword: '富山 环水公园 星巴克',
       gmap: 'Fugan+Unga+Kansui+Park+Toyama' },
-    { name: '西町大喜（富山黑拉面）', lat: 36.6905, lng: 137.2152, type: 'food', time: '18:30',
+    { name: '西町大喜（富山黑拉面）', lat: 36.6905, lng: 137.2152, type: 'food', time: '17:30',
       desc: '候选，未实地调研。富山ブラック 的元祖店，群里 Flow 发的视频吐槽过「真的太苦了」',
       budget: '¥1,000', detail: '重口酱油汤底，配白饭吃\n不吃咸的可换富山湾寿司',
       pay: { cash: 1 }, dianping: 'search', dianpingKeyword: '西町大喜 富山',
       xhsKeyword: '富山黑拉面', gmap: 'Nishicho+Taiki+Toyama' },
-    { name: 'きまち亭 Kimachitei（D2 住宿）', lat: 36.6905, lng: 137.2150, type: 'hotel', time: '19:30',
-      desc: '✅ 已订。入住 15:00-20:00：建议 15:00 左右先来入住放行李，吃完晚饭再回来',
+    { name: 'きまち亭 Kimachitei（D2 住宿）', lat: 36.6905, lng: 137.2150, type: 'hotel', time: '19:00',
+      desc: '✅ 已订。已跟房东约好 19:00 到（入住截止 20:00）',
       budget: '约 ¥1,548 CNY/晚',
-      detail: '樱桥站步行 3 分钟 / 富山站步行 10-15 分钟；整栋 5 卧 1 卫，4.99★(85)\n⚠️ 入住截止 20:00，吃完晚饭再来会卡点\n⚠️ 提前一天告诉房东预计到达时间\n⚠️ 不可退款\n⚠️ 坐标为樱桥站一带的近似位置',
+      detail: '樱桥站步行 3 分钟 / 富山站步行 10-15 分钟；整栋 5 卧 1 卫，4.99★(85)\n⚠️ 下午 13:00-19:00 大箱放哪：先问房东能否提前放，不行用富山站投币柜\n⚠️ 不可退款\n⚠️ 坐标为樱桥站一带的近似位置',
       reserve: 'https://www.airbnb.cn/rooms/659113557028563767',
       gmap: 'Sakurabashi+Station+Toyama' }
   ]},
@@ -456,7 +456,7 @@ function overviewContent() {
 <div class="day-list">${DAYS.slice(1).map(d=>`<div class="card" onclick="go(${d.id})"><div class="name"><span class="dot" style="background:${d.color}"></span>${d.label} · ${d.title}</div><div class="desc">${d.date}</div></div>`).join('')}</div>
 <div class="section-head">🚨 未决事项</div>
 <div class="card"><div class="name">✅ D5-D6 已定</div><div class="desc">D5 在深山樱庵自然醒、泡汤，退房后行李寄存在酒店，下午去上高地（精华版约 1.5 小时 / 完整版约 3-4 小时，当天定）；16:30 回平汤取行李，17:30 坐车去高山（末班 18:28），高山 Rin no Yado 连住 2 晚（✅ 已订）。D6 全天逛高山。⚠️ 末班车卡得紧，错过只能打车，叫车电话见 D5。</div></div>
-<div class="card"><div class="name">⏰ 入住时间卡点</div><div class="desc">D2 富山きまち亭入住截止 20:00，15:00 左右先去入住放行李；D3 松本 16:00-20:00，约 17:55 到，要先在线登记护照；D4 深山樱庵最晚入住时间要在订房时问清，约 18:00 才到；D5 高山约 19:00 才到，要先跟房东确认晚到怎么进门；D7 金泽 19:30 左右到，只订能晚到入住的。详见 PLAN「每晚入住 / 退房时间对照」。</div></div>
+<div class="card"><div class="name">⏰ 入住时间卡点</div><div class="desc">D2 富山きまち亭已约 19:00 到（截止 20:00），下午大箱放哪还要定；D3 松本 16:00-20:00，约 17:55 到，要先在线登记护照；D4 深山樱庵最晚入住时间要在订房时问清，约 18:00 才到；D5 高山约 19:00 才到，要先跟房东确认晚到怎么进门；D7 金泽 19:30 左右到，只订能晚到入住的。详见 PLAN「每晚入住 / 退房时间对照」。</div></div>
 <div class="card"><div class="name">还剩 2 晚住宿未订</div><div class="desc">已订：D1 金泽、D2 富山、D3 松本、D5-D6 高山。还没订：D4 平汤深山樱庵（最紧张，问清 D5 能否寄存行李到傍晚）、D7 金泽。</div></div>
 <div class="card"><div class="name">大件行李动线（4 人 = 4 个大箱）· 只需托运 1 次</div><div class="desc">10/3 立山黑部带不了大箱：富山电铁站交寄、信浓大町取件，¥4,000/件，只收现金，4 件 ¥16,000。原来的「平汤→高山」托运已取消：D5 大箱先寄存在平汤旅馆，从上高地回来后跟人一起坐巴士走。</div></div>
 <div class="card"><div class="name">✅ 白川乡：保留，改到 D7 高山→金泽的路上</div><div class="desc">已核对小红书原图更正：「十一只剩泥地」不成立，稻田金黄未收割反而加分。真正坐实的风险是熊——10/8 笔记拍到景区实际挂牌封路。红叶未到、雪未下属实但不算减分。换掉与否更多是行程取舍，不是「难看」。</div></div>
